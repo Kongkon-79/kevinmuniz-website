@@ -19,8 +19,6 @@ export default function HeroSection() {
       {/* Dark overlay for better readability */}
       <div className="absolute inset-0 bg-black/50" />
 
-      {/* Optional soft gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/45 to-black/20" />
 
       <div className="relative z-10 flex min-h-screen items-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

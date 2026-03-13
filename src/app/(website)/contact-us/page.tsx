@@ -1,8 +1,11 @@
 import React from 'react'
+import ContactUsHero from './_components/contact-us-hero'
 
 const ContactUsPage = () => {
   return (
-    <div>ContactUsPage</div>
+    <div>
+      <ContactUsHero/>
+    </div>
   )
 }
 

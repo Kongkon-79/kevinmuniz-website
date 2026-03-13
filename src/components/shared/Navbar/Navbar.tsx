@@ -76,7 +76,7 @@ const Navbar = () => {
 
               <Link
                 href="/how-it-works"
-                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/services" ? "border-b-[2px] border-primary" : "border-0"
+                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/how-it-works" ? "border-b-[2px] border-primary" : "border-0"
                   }`}
               >
                 How it works
@@ -84,7 +84,7 @@ const Navbar = () => {
 
               <Link
                 href="/community"
-                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/profiles" ? "border-b-[2px] border-primary" : "border-0"
+                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/community" ? "border-b-[2px] border-primary" : "border-0"
                   }`}
               >
                 Community
@@ -93,7 +93,7 @@ const Navbar = () => {
 
               <Link
                 href="/contact-us"
-                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/prices" ? "border-b-[2px] border-primary" : "border-0"
+                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/contact-us" ? "border-b-[2px] border-primary" : "border-0"
                   }`}
               >
                 Contact
@@ -116,14 +116,9 @@ const Navbar = () => {
                     />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="p-2 border-none bg-white">
-                    <Link href="/profile">
+                    <Link href="#">
                       <DropdownMenuLabel className="cursor-pointer text-base md:text-lg text-[#131313] leading-[120%] font-medium hover:text-primary">
-                        Profile
-                      </DropdownMenuLabel>
-                    </Link>
-                    <Link href="/password-change">
-                      <DropdownMenuLabel className="cursor-pointer text-base md:text-lg text-[#131313] leading-[120%] font-medium hover:text-primary">
-                        Password Change
+                        Dashboard
                       </DropdownMenuLabel>
                     </Link>
                     <DropdownMenuLabel
@@ -180,34 +175,26 @@ const Navbar = () => {
               </Link>
 
               <Link
-                href="/services"
-                className={`w-fit text-sm md:text-base hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/services" ? "border-b-[2px] border-primary" : "border-0"
+                href="/how-it-works"
+                className={`w-fit text-sm md:text-base hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/how-it-works" ? "border-b-[2px] border-primary" : "border-0"
                   }`}
               >
-                Services
+                How it works
               </Link>
               <Link
-                href="/profiles"
-                className={`w-fit text-sm md:text-base hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/profiles" ? "border-b-[2px] border-primary" : "border-0"
+                href="/community"
+                className={`w-fit text-sm md:text-base hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/community" ? "border-b-[2px] border-primary" : "border-0"
                   }`}
               >
-                Profiles
-              </Link>
-
-              <Link
-                href="/analytic-soccer-coming-soon"
-                className={`w-fit text-sm md:text-base hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/analytic-soccer-coming-soon" ? "border-b-[2px] border-primary" : "border-0"
-                  }`}
-              >
-                Player Evaluation Program
+                Community
               </Link>
 
               <Link
-                href="/prices"
-                className={`w-fit text-sm md:text-base hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/prices" ? "border-b-[2px] border-primary" : "border-0"
+                href="/contact-us"
+                className={`w-fit text-sm md:text-base hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/contact-us" ? "border-b-[2px] border-primary" : "border-0"
                   }`}
               >
-                Prices
+                Contact Us
               </Link>
 
 
@@ -229,25 +216,14 @@ const Navbar = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="p-2 bg-white border-white">
                       <Link
-                        href="/profile"
+                        href="#"
                         onClick={() => {
                           setIsOpen(false)
                           setMobileDropdownOpen(false)
                         }}
                       >
                         <DropdownMenuLabel className="cursor-pointer text-base md:text-lg text-[#131313] leading-[120%] font-medium hover:text-primary">
-                          Profile
-                        </DropdownMenuLabel>
-                      </Link>
-                      <Link
-                        href="/password-change"
-                        onClick={() => {
-                          setIsOpen(false)
-                          setMobileDropdownOpen(false)
-                        }}
-                      >
-                        <DropdownMenuLabel className="cursor-pointer text-base md:text-lg text-[#131313] leading-[120%] font-medium hover:text-primary">
-                          Password Change
+                          Dashboard
                         </DropdownMenuLabel>
                       </Link>
                       <DropdownMenuLabel
