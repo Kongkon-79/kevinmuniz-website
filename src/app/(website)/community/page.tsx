@@ -1,8 +1,11 @@
 import React from 'react'
+import CommunityHero from './_components/community-hero'
 
 const CommunityPage = () => {
   return (
-    <div>CommunityPage</div>
+    <div>
+      <CommunityHero/>
+    </div>
   )
 }
 

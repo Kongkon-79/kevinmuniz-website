@@ -48,43 +48,31 @@ const LoginForm = () => {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      setIsLoading(true);
+async function onSubmit(values: z.infer<typeof formSchema>) {
+  try {
+    setIsLoading(true);
 
-      const res = await signIn("credentials", {
-        email: values?.email,
-        password: values?.password,
-        redirect: false,
-      });
+    const res = await signIn("credentials", {
+      email: values?.email,
+      password: values?.password,
+      redirect: false,
+    });
 
-      // if (res?.error) {
-      //   throw new Error(res.error);
-      // }
-
-       if (res?.error) {
-      if (res.error === "ADMIN_ONLY") {
-        toast.error("Only admin can access this admin dashboard");
-        return;
-      }
-
-      if (res.error === "INVALID_CREDENTIALS") {
-        toast.error("Email or Password wrong");
-        return;
-      }
-
-      toast.error("Login failed");
+    if (res?.error) {
+      toast.error(res.error || "Login failed");
       return;
     }
-      toast.success("Login successful!");
-      router.push("/");
-    } catch (error) {
-      console.error("Login failed:", error);
-      toast.error("Login failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+
+    toast.success("Login successful!");
+    router.push("/");
+
+  } catch (error) {
+    console.error("Login failed:", error);
+    toast.error("Login failed. Please try again.");
+  } finally {
+    setIsLoading(false);
   }
+}
   return (
     <div>
       <div className="w-full md:w-[570px] bg-white rounded-[16px] border-[2px] border-[#E7E7E7] shadow-[0px_0px_32px_0px_#0000001F] p-5 md:p-6">
