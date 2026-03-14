@@ -6,6 +6,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { LogOut, Menu, X } from "lucide-react"
+import { useQuery } from "@tanstack/react-query"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import LogoutModal from "@/components/modals/LogoutModal"
 import { toast } from "sonner"
+import { fetchProfile, getFullName } from "@/app/dashboard/(shared)/settings/api"
 // import { useRouter } from "next/navigation"
 
 const Navbar = () => {
@@ -34,8 +36,24 @@ const Navbar = () => {
   const session = useSession()
   const status = session?.status
   const user = session?.data?.user
+  const token = user?.accessToken
 
-  
+  const { data: profile } = useQuery({
+    queryKey: ["navbar-profile"],
+    queryFn: () => fetchProfile(token as string),
+    enabled: !!token,
+  })
+
+  const displayName =
+    getFullName(profile) ||
+    [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
+    user?.name ||
+    "User"
+  const displayRole = profile?.role || user?.role || "User"
+  const displayImage =
+    profile?.profileImage || user?.profileImage || "/assets/images/no-user.jpg"
+
+
 
   const handLogout = async () => {
     try {
@@ -54,52 +72,52 @@ const Navbar = () => {
           <div className="flex items-center justify-between gap-5">
             <div className="flex items-center gap-10 md:gap-12 lg:gap-14">
               {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-              <Image
-                src="/assets/images/logo.png"
-                alt="logo"
-                width={1000}
-                height={1000}
-                className="w-auto h-[56px] object-contain"
-              />
-            </Link>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-5">
-              <Link
-                href="/"
-                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/" ? "border-b-[2px] border-primary" : "border-0"
-                  }`}
-              >
-                Home
+              <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+                <Image
+                  src="/assets/images/logo.png"
+                  alt="logo"
+                  width={1000}
+                  height={1000}
+                  className="w-auto h-[56px] object-contain"
+                />
               </Link>
 
-              <Link
-                href="/how-it-works"
-                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/how-it-works" ? "border-b-[2px] border-primary" : "border-0"
-                  }`}
-              >
-                How it works
-              </Link>
+              {/* Desktop Menu */}
+              <div className="hidden md:flex items-center gap-5">
+                <Link
+                  href="/"
+                  className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/" ? "border-b-[2px] border-primary" : "border-0"
+                    }`}
+                >
+                  Home
+                </Link>
 
-              <Link
-                href="/community"
-                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/community" ? "border-b-[2px] border-primary" : "border-0"
-                  }`}
-              >
-                Community
-              </Link>
+                <Link
+                  href="/how-it-works"
+                  className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/how-it-works" ? "border-b-[2px] border-primary" : "border-0"
+                    }`}
+                >
+                  How it works
+                </Link>
+
+                <Link
+                  href="/community"
+                  className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/community" ? "border-b-[2px] border-primary" : "border-0"
+                    }`}
+                >
+                  Community
+                </Link>
 
 
-              <Link
-                href="/contact-us"
-                className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/contact-us" ? "border-b-[2px] border-primary" : "border-0"
-                  }`}
-              >
-                Contact
-              </Link>
+                <Link
+                  href="/contact-us"
+                  className={`text-sm md:text-[15px] hover:text-primary leading-[150%] text-[#131313] font-normal transition-all ease-in-out duration-300 ${pathname === "/contact-us" ? "border-b-[2px] border-primary" : "border-0"
+                    }`}
+                >
+                  Contact
+                </Link>
 
-            </div>
+              </div>
             </div>
 
             {/* CTA Buttons */}
@@ -108,24 +126,45 @@ const Navbar = () => {
                 <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
                   <DropdownMenuTrigger>
                     <Image
-                      src="/assets/images/no-user.jpg"
+                      src={displayImage}
                       alt="user-img"
                       width={200}
                       height={200}
-                      className="w-14 h-14 rounded-full border object-contain"
+                      className="w-14 h-14 rounded-full border object-cover cursor-pointer"
                     />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="p-2 border-none bg-white">
-                    <Link href="#">
-                      <DropdownMenuLabel className="cursor-pointer text-base md:text-lg text-[#131313] leading-[120%] font-medium hover:text-primary">
+                  <DropdownMenuContent className="w-56 p-2 bg-white rounded-xl shadow-lg border border-gray-100 mt-2" align="end">
+                    <div className="flex items-center gap-3 p-2 border-b border-gray-100 mb-2">
+                      <Image
+                        src={displayImage}
+                        alt="Profile"
+                        width={40}
+                        height={40}
+                        className="rounded-full w-10 h-10 object-cover border"
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-sm font-semibold text-gray-900">{displayName}</span>
+                        <span className="text-xs text-gray-500 capitalize">{displayRole.toLowerCase()}</span>
+                      </div>
+                    </div>
+
+                    <Link href="/dashboard/overview" className="flex items-center w-full outline-none">
+                      <DropdownMenuLabel className="cursor-pointer w-full text-sm text-gray-700 font-medium hover:bg-gray-50 hover:text-primary rounded-md py-2 px-3 transition-colors">
                         Dashboard
                       </DropdownMenuLabel>
                     </Link>
+
+                    <Link href="/dashboard/settings" className="flex items-center w-full outline-none">
+                      <DropdownMenuLabel className="cursor-pointer w-full text-sm text-gray-700 font-medium hover:bg-gray-50 hover:text-primary rounded-md py-2 px-3 transition-colors mb-1">
+                        Settings
+                      </DropdownMenuLabel>
+                    </Link>
+
                     <DropdownMenuLabel
                       onClick={() => setLogoutModalOpen(true)}
-                      className="flex items-center gap-2 cursor-pointer text-base md:text-lg text-[#B70000] leading-[120%] font-medium hover:text-red-800"
+                      className="flex items-center gap-2 cursor-pointer w-full text-sm text-red-600 font-medium hover:bg-red-50 rounded-md py-2 px-3 transition-colors mt-1 border-t border-gray-100"
                     >
-                      <LogOut className="w-5 h-5 " /> Logout
+                      <LogOut className="w-4 h-4" /> Logout
                     </DropdownMenuLabel>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -207,30 +246,59 @@ const Navbar = () => {
                   >
                     <DropdownMenuTrigger>
                       <Image
-                        src={user?.profileImage || "/assets/images/no-user.jpg"}
+                        src={displayImage}
                         alt="user-img"
                         width={200}
                         height={200}
-                        className="w-14 h-14 rounded-full border object-contain"
+                        className="w-14 h-14 rounded-full border object-cover cursor-pointer"
                       />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="p-2 bg-white border-white">
+                    <DropdownMenuContent className="w-56 p-2 bg-white rounded-xl shadow-lg border border-gray-100 mb-2" align="end">
+                      <div className="flex items-center gap-3 p-2 border-b border-gray-100 mb-2">
+                        <Image
+                          src={displayImage}
+                          alt="Profile"
+                          width={40}
+                          height={40}
+                          className="rounded-full w-10 h-10 object-cover border"
+                        />
+                        <div className="flex flex-col">
+                          <span className="text-sm font-semibold text-gray-900">{displayName}</span>
+                          <span className="text-xs text-gray-500 capitalize">{displayRole.toLowerCase()}</span>
+                        </div>
+                      </div>
+
                       <Link
-                        href="#"
+                        href="/dashboard/overview"
                         onClick={() => {
                           setIsOpen(false)
                           setMobileDropdownOpen(false)
                         }}
+                        className="flex items-center w-full outline-none"
                       >
-                        <DropdownMenuLabel className="cursor-pointer text-base md:text-lg text-[#131313] leading-[120%] font-medium hover:text-primary">
+                        <DropdownMenuLabel className="cursor-pointer w-full text-sm text-gray-700 font-medium hover:bg-gray-50 hover:text-primary rounded-md py-2 px-3 transition-colors">
                           Dashboard
                         </DropdownMenuLabel>
                       </Link>
+
+                      <Link
+                        href="/dashboard/settings"
+                        onClick={() => {
+                          setIsOpen(false)
+                          setMobileDropdownOpen(false)
+                        }}
+                        className="flex items-center w-full outline-none"
+                      >
+                        <DropdownMenuLabel className="cursor-pointer w-full text-sm text-gray-700 font-medium hover:bg-gray-50 hover:text-primary rounded-md py-2 px-3 transition-colors mb-1">
+                          Settings
+                        </DropdownMenuLabel>
+                      </Link>
+
                       <DropdownMenuLabel
                         onClick={() => setLogoutModalOpen(true)}
-                        className="flex items-center gap-2 cursor-pointer text-base md:text-lg text-[#B70000] leading-[120%] font-medium hover:text-red-800"
+                        className="flex items-center gap-2 cursor-pointer w-full text-sm text-red-600 font-medium hover:bg-red-50 rounded-md py-2 px-3 transition-colors mt-1 border-t border-gray-100"
                       >
-                        <LogOut className="w-5 h-5 " /> Logout
+                        <LogOut className="w-4 h-4 " /> Logout
                       </DropdownMenuLabel>
                     </DropdownMenuContent>
                   </DropdownMenu>
