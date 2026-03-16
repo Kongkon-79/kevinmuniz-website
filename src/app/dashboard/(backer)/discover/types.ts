@@ -3,6 +3,11 @@ export interface DiscoverCampaignCategory {
   name: string
 }
 
+export interface DiscoverCategoryOption {
+  _id: string
+  name: string
+}
+
 export interface DiscoverCampaignCreator {
   _id: string
   email: string
@@ -41,6 +46,10 @@ export interface DiscoverCampaignPagination {
 export interface DiscoverCampaignsResponse {
   data: DiscoverCampaign[]
   pagination: DiscoverCampaignPagination
+}
+
+export interface DiscoverCategoryListResponse {
+  data: DiscoverCategoryOption[]
 }
 
 export interface DiscoverCampaignDonor {

@@ -154,7 +154,7 @@ export default function DonationSuccessContent() {
     },
     {
       icon: CreditCard,
-      value: 'Stripe - Visa ****4242',
+      value: 'Stripe',
       label: 'Payment Method',
     },
     {

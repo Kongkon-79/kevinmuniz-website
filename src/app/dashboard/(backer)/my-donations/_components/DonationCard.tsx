@@ -31,7 +31,10 @@ const truncateSessionId = (value: string) => {
 }
 
 const getStatusConfig = (donation: Donation) => {
-  if (donation.refundStatus === 'pending' || donation.refundStatus === 'review') {
+  if (
+    donation.refundStatus === 'pending' ||
+    donation.refundStatus === 'review'
+  ) {
     return {
       label: 'Under Review',
       className: 'border-[#93C5FD] bg-[#EFF6FF] text-[#2563EB]',
@@ -98,10 +101,12 @@ export default function DonationCard({
         <div className="my-5 h-px bg-[#EDF2F7]" />
 
         <div>
-          <p className="text-[20px] font-medium text-[#2D2D2D]">Payment Method</p>
+          <p className="text-[20px] font-medium text-[#2D2D2D]">
+            Payment Method
+          </p>
           <p className="mt-2 inline-flex items-center gap-2 text-sm text-[#666666]">
             <ShieldCheck className="h-4 w-4" />
-            Stripe - Visa ****4242
+            Stripe
           </p>
         </div>
 
@@ -132,7 +137,9 @@ export default function DonationCard({
                 />
               </div>
               <div className="mt-2 rounded-[12px] bg-[#F3F4F6] p-4 text-sm text-[#666666]">
-                <span className="font-medium text-[#2D2D2D]">Refund Reason:</span>{' '}
+                <span className="font-medium text-[#2D2D2D]">
+                  Refund Reason:
+                </span>{' '}
                 {donation.refundReason || 'Not provided'}
               </div>
             </div>
@@ -142,39 +149,27 @@ export default function DonationCard({
         <div className="my-5 h-px bg-[#EDF2F7]" />
 
         <div className="flex flex-wrap gap-3">
-          {canRequestRefund && (
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => downloadReceipt(donation)}
-              className="h-[44px] rounded-full border-[#D7DDE5] px-5 text-[#666666] hover:bg-[#F5F7FA]"
-            >
-              <Download className="h-4 w-4" />
-              Download Receipt
-            </Button>
-          )}
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => downloadReceipt(donation)}
+            className="h-[44px] rounded-full border-[#D7DDE5] px-5 text-[#666666] hover:bg-[#F5F7FA]"
+          >
+            <Download className="h-4 w-4" />
+            Download Receipt
+          </Button>
 
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push(`/dashboard/discover/${donation.campaignId._id}`)}
+            onClick={() =>
+              router.push(`/dashboard/discover/${donation.campaignId._id}`)
+            }
             className="h-[44px] rounded-full border-[#D7DDE5] px-5 text-[#666666] hover:bg-[#F5F7FA]"
           >
             <Eye className="h-4 w-4" />
             View Campaign Details
           </Button>
-
-          {!canRequestRefund && (
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => downloadReceipt(donation)}
-              className="h-[44px] rounded-full border-[#D7DDE5] px-5 text-[#666666] hover:bg-[#F5F7FA]"
-            >
-              <Download className="h-4 w-4" />
-              Download Receipt
-            </Button>
-          )}
 
           {canRequestRefund && (
             <Button

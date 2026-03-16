@@ -3,6 +3,14 @@ export interface CreatorCampaignCategory {
   name: string;
 }
 
+export interface CreatorCampaignCreator {
+  _id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  profileImage?: string;
+}
+
 export interface CreatorCampaign {
   _id: string;
   title: string;
@@ -13,6 +21,7 @@ export interface CreatorCampaign {
   endDate: string;
   campaignDetails: string;
   image: string;
+  createdBy?: CreatorCampaignCreator;
   approvalStatus: "pending" | "accepted" | "rejected";
   activeStatus: "active" | "inactive";
   totalRaised?: number;

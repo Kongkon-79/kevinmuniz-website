@@ -12,6 +12,7 @@ import {
   PlusCircle,
   BarChart,
   Heart,
+  Bell,
   Search,
   LogOut,
   House,
@@ -47,6 +48,7 @@ export default function DashboardSidebar() {
         icon: PlusCircle,
       },
       { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart },
+      { name: 'Notifications', href: '/dashboard/notifications', icon: Bell },
     ],
     [],
   )
@@ -55,6 +57,7 @@ export default function DashboardSidebar() {
     () => [
       { name: 'Discover', href: '/dashboard/discover', icon: Search },
       { name: 'My Donations', href: '/dashboard/my-donations', icon: Heart },
+      { name: 'Notifications', href: '/dashboard/notifications', icon: Bell },
     ],
     [],
   )

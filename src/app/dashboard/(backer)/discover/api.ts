@@ -1,5 +1,6 @@
 import axios from 'axios'
 import type {
+  DiscoverCategoryListResponse,
   CreateDonationSessionResponse,
   DiscoverCampaignDetailResponse,
   DiscoverCampaignsResponse,
@@ -25,6 +26,7 @@ export const fetchActiveCampaigns = async (
   token: string,
   page: number,
   search?: string,
+  categoryIds?: string[],
 ): Promise<DiscoverCampaignsResponse> => {
   const response = await axios.get<{ data: DiscoverCampaignsResponse }>(
     `${API_URL}/campaign`,
@@ -34,6 +36,24 @@ export const fetchActiveCampaigns = async (
         page,
         limit: 10,
         search,
+        categoryIds: categoryIds?.length ? categoryIds.join(',') : undefined,
+      },
+      headers: getAuthHeaders(token),
+    },
+  )
+
+  return response.data.data
+}
+
+export const fetchDiscoverCategories = async (
+  token: string,
+): Promise<DiscoverCategoryListResponse> => {
+  const response = await axios.get<{ data: DiscoverCategoryListResponse }>(
+    `${API_URL}/category/get-all-categories`,
+    {
+      params: {
+        page: 1,
+        limit: 100,
       },
       headers: getAuthHeaders(token),
     },

@@ -8,6 +8,98 @@
   }
 }
 
+@layer components {
+  .rich-content {
+    @apply max-w-none text-[15px] leading-7 text-[#5C5C5C];
+  }
+
+  .rich-content > :first-child {
+    margin-top: 0;
+  }
+
+  .rich-content > :last-child {
+    margin-bottom: 0;
+  }
+
+  .rich-content h1,
+  .rich-content h2,
+  .rich-content h3,
+  .rich-content h4,
+  .rich-content h5,
+  .rich-content h6 {
+    @apply mb-3 mt-6 font-semibold leading-tight text-[#111827];
+  }
+
+  .rich-content h1 {
+    @apply text-[28px];
+  }
+
+  .rich-content h2 {
+    @apply text-[24px];
+  }
+
+  .rich-content h3 {
+    @apply text-[20px];
+  }
+
+  .rich-content p {
+    @apply my-3;
+  }
+
+  .rich-content strong {
+    @apply font-semibold text-[#111827];
+  }
+
+  .rich-content a {
+    @apply text-[#2EABFC] underline-offset-4 transition-colors hover:text-[#0F8FE6];
+  }
+
+  .rich-content ul,
+  .rich-content ol {
+    @apply my-4 pl-6;
+  }
+
+  .rich-content ul {
+    list-style-type: disc;
+  }
+
+  .rich-content ol {
+    list-style-type: decimal;
+  }
+
+  .rich-content li {
+    @apply my-1;
+  }
+
+  .rich-content li::marker {
+    color: #8c5cff;
+  }
+
+  .rich-content blockquote {
+    @apply my-5 rounded-r-[12px] border-l-4 border-[#D6BEFF] bg-[#FAF7FF] px-4 py-3 italic text-[#5E6470];
+  }
+
+  .rich-content hr {
+    @apply my-6 border-[#E8EDF3];
+  }
+
+  .rich-content img {
+    @apply rounded-[16px] border border-[#E8EDF3] shadow-sm;
+  }
+
+  .rich-content code {
+    @apply rounded bg-[#F3F4F6] px-1.5 py-0.5 text-[13px] text-[#111827];
+  }
+
+  .rich-content pre {
+    @apply my-4 overflow-x-auto rounded-[16px] bg-[#111827] p-4 text-white;
+  }
+
+  .rich-content pre code {
+    @apply bg-transparent p-0 text-inherit;
+  }
+}
+
 body{
   @apply bg-[#F3FCFF]
 }
