@@ -5,7 +5,10 @@ export const produceProjectSchema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
   productionCompany: z.string().min(1, 'Production company is required'),
   imdbPageLink: z.string().url('Must be a valid URL'),
-  cv: z.string().url('Must be a valid URL'),
+  cv: z.custom<File>(
+    value => value instanceof File && value.size > 0,
+    'CV file is required',
+  ),
 })
 
 export type ProduceProjectForm = z.infer<typeof produceProjectSchema>

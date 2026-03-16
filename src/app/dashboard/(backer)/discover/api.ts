@@ -84,12 +84,20 @@ export const submitRepresentation = async (
     lastName: string
     productionCompany: string
     imdbPageLink: string
-    cv: string
+    cv: File
   },
 ): Promise<void> => {
-  await axios.post(`${API_URL}/representation/${campaignId}`, payload, {
+  const formData = new FormData()
+  formData.append('firstName', payload.firstName)
+  formData.append('lastName', payload.lastName)
+  formData.append('productionCompany', payload.productionCompany)
+  formData.append('imdbPageLink', payload.imdbPageLink)
+  formData.append('cv', payload.cv)
+
+  await axios.post(`${API_URL}/representation/${campaignId}`, formData, {
     headers: {
       ...getAuthHeaders(token),
+      'Content-Type': 'multipart/form-data',
     },
   })
 }
