@@ -46,4 +46,5 @@ export interface ChangePasswordPayload {
 
 export interface ApiErrorResponse {
   message?: string;
+  error?: string;
 }

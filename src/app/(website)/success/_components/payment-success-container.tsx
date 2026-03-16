@@ -1,14 +1,8 @@
-
-
-
-
-import { CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { CheckCircle } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default function PaymentSuccessContainer() {
-
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] px-4">
       <div className="max-w-md w-full bg-white shadow-md rounded-xl p-8 text-center">
@@ -25,7 +19,7 @@ export default function PaymentSuccessContainer() {
         {/* Subtitle */}
         <p className="text-sm text-[#64748B] mt-2 leading-[150%]">
           Thank you! Your payment has been processed successfully.
-           {/* A confirmation email has been sent to your inbox. */}
+          {/* A confirmation email has been sent to your inbox. */}
         </p>
 
         {/* Card */}
@@ -35,12 +29,12 @@ export default function PaymentSuccessContainer() {
           </h3>
           <div className="mt-2 space-y-1 text-[13px] text-[#475569]">
             <p>
-              <span className="font-medium">Status :</span>{" "}
+              <span className="font-medium">Status :</span>{' '}
               <span className="text-green-600 font-semibold">Completed</span>
             </p>
-            <p>
+            {/* <p>
               <span className="font-medium">Payment Method :</span> Paypal
-            </p>
+            </p> */}
             {/* <p>
               <span className="font-medium">Transaction ID :</span> #TRX2025001
             </p> */}
@@ -70,29 +64,8 @@ export default function PaymentSuccessContainer() {
         </div>
       </div>
     </div>
-  );
+  )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 
@@ -132,7 +105,6 @@ export default function PaymentSuccessContainer() {
 //   })
 
 //   console.log(data)
-
 
 //   return (
 //     <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] px-4">
@@ -197,19 +169,3 @@ export default function PaymentSuccessContainer() {
 //     </div>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

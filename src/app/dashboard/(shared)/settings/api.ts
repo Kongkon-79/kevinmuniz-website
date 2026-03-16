@@ -17,7 +17,7 @@ const getAuthHeaders = (token: string) => ({
 
 export const getErrorMessage = (error: unknown) => {
   if (axios.isAxiosError<ApiErrorResponse>(error)) {
-    return error.response?.data?.message || error.message;
+    return error.response?.data?.error || error.response?.data?.message || error.message;
   }
 
   return error instanceof Error ? error.message : "Something went wrong";

@@ -52,6 +52,8 @@ const Navbar = () => {
   const displayRole = profile?.role || user?.role || "User"
   const displayImage =
     profile?.profileImage || user?.profileImage || "/assets/images/no-user.jpg"
+  const dashboardHref =
+    displayRole === "CREATOR" ? "/dashboard/overview" : "/dashboard/discover"
 
 
 
@@ -148,7 +150,7 @@ const Navbar = () => {
                       </div>
                     </div>
 
-                    <Link href="/dashboard/overview" className="flex items-center w-full outline-none">
+                    <Link href={dashboardHref} className="flex items-center w-full outline-none">
                       <DropdownMenuLabel className="cursor-pointer w-full text-sm text-gray-700 font-medium hover:bg-gray-50 hover:text-primary rounded-md py-2 px-3 transition-colors">
                         Dashboard
                       </DropdownMenuLabel>
@@ -269,7 +271,7 @@ const Navbar = () => {
                       </div>
 
                       <Link
-                        href="/dashboard/overview"
+                        href={dashboardHref}
                         onClick={() => {
                           setIsOpen(false)
                           setMobileDropdownOpen(false)

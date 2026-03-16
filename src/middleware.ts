@@ -22,10 +22,12 @@ export async function middleware(request: NextRequest) {
     // Wait, website needs USER or CREATOR. Admin shouldn't be here.
     const role = token?.role as string | undefined
     const isAllowedRole = role === 'USER' || role === 'CREATOR'
+    const dashboardHome =
+        role === 'CREATOR' ? '/dashboard/overview' : '/dashboard/discover'
 
     if (isAuthRoute(pathname)) {
         if (isAuthenticated && isAllowedRole) {
-            return NextResponse.redirect(new URL('/dashboard/overview', request.url))
+            return NextResponse.redirect(new URL(dashboardHome, request.url))
         }
         return NextResponse.next()
     }

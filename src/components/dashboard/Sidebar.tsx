@@ -22,6 +22,8 @@ import { cn } from '@/lib/utils'
 export default function DashboardSidebar() {
   const { data: session } = useSession()
   const role = session?.user?.role
+  const dashboardHome =
+    role === 'CREATOR' ? '/dashboard/overview' : '/dashboard/discover'
   const pathname = usePathname()
   const [logoutModalOpen, setLogoutModalOpen] = useState(false)
 
@@ -51,17 +53,23 @@ export default function DashboardSidebar() {
 
   const backerLinks = useMemo(
     () => [
-      { name: 'My Donations', href: '/dashboard/donations', icon: Heart },
-      { name: 'Discover', href: '/how-it-works', icon: Search },
+      { name: 'Discover', href: '/dashboard/discover', icon: Search },
+      { name: 'My Donations', href: '/dashboard/my-donations', icon: Heart },
     ],
     [],
   )
 
-  const links = [
-    ...commonLinks,
-    ...(role === 'CREATOR' ? creatorLinks : backerLinks),
-    { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-  ]
+  const links =
+    role === 'CREATOR'
+      ? [
+          ...commonLinks,
+          ...creatorLinks,
+          { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+        ]
+      : [
+          ...backerLinks,
+          { name: 'Setting', href: '/dashboard/settings', icon: Settings },
+        ]
 
   const isLinkActive = (href: string) => {
     if (href === '/dashboard/my-campaigns/create') {
@@ -76,14 +84,29 @@ export default function DashboardSidebar() {
       )
     }
 
+    if (href === '/dashboard/discover') {
+      return pathname === href || pathname.startsWith('/dashboard/discover/')
+    }
+
+    if (href === '/dashboard/my-donations') {
+      return (
+        pathname === href ||
+        pathname.startsWith('/dashboard/my-donations') ||
+        pathname.startsWith('/dashboard/donation-success') ||
+        pathname.startsWith('/dashboard/donation-failed') ||
+        pathname === '/donation-success' ||
+        pathname === '/donation-failed'
+      )
+    }
+
     return pathname === href
   }
 
   return (
     <>
-      <div className="hidden md:fixed md:inset-y-0 md:left-0 md:z-30 md:flex md:w-[264px] md:flex-col md:overflow-y-auto md:bg-white">
+      <div className="hidden md:fixed md:inset-y-0 md:left-0 md:z-30 md:flex md:w-[320px] md:flex-col md:overflow-y-auto md:bg-white">
         <div className="flex justify-center px-6 pb-4 pt-8">
-          <Link href="/dashboard/overview" className="inline-flex">
+          <Link href={dashboardHome} className="inline-flex">
             <Image
               src="/assets/images/autoLogo.png"
               alt="Kevin Muniz"
