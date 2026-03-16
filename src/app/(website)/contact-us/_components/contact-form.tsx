@@ -56,7 +56,7 @@ const ContactForm = () => {
     const {mutate, isPending} = useMutation({
         mutationKey: ["contact-us"],
         mutationFn: async (values: {name:string, phone:string, message:string, email:string})=>{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/contact`,{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`,{
                 method: "POST",
                 headers: {
                     "Content-Type" : "application/json"

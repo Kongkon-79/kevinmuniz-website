@@ -18,7 +18,7 @@ export default function NewsletterSubscribe() {
     mutationKey: ["newsletter"],
     mutationFn: async (payload: { email: string }): Promise<NewsletterResponse> => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/newsletter`,
+        `${process.env.NEXT_PUBLIC_API_URL}/newsletter`,
         {
           method: "POST",
           headers: {

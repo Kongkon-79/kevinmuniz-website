@@ -5,7 +5,7 @@ import type {
 } from "./types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || API_URL;
+const BASE_URL = API_URL;
 
 const getAuthHeaders = (token: string) => ({
   Authorization: `Bearer ${token}`,

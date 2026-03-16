@@ -13,7 +13,7 @@ const resolveSocketUrl = () => {
 
   const apiUrl =
     process.env.NEXT_PUBLIC_SOCKET_URL ||
-    process.env.NEXT_PUBLIC_BACKEND_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
     ''
 
   return apiUrl.replace(/\/api\/v1\/?$/, '').replace(/\/api\/?$/, '')
