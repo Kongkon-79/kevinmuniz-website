@@ -32,9 +32,16 @@ const faqItems = [
 
   return (
     <div>
-      <section className="py-6 md:py-12 lg:py-20 bg-white">
+      <section className="py-6 md:py-12 lg:py-20">
         <div className="container ">
-          <h4 className='text-3xl md:text-4xl lg:text-5xl text-center font-bold leading-[120%] text-[#131313] pb-4'>FAQ</h4>
+          <div className="">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-normal text-[#2C2C2C] text-center">
+            Steps For Film Industry Professionals
+          </h2>
+          <p className="mt-3 text-base md:text-lg font-medium leading-normal text-[#8B8B8B] text-center">
+            Find the answers you are looking for in the section below.
+          </p>
+        </div>
       
           <Accordion type="single" collapsible className="w-full">
             {faqItems?.map((item, index) => (

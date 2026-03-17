@@ -2,7 +2,7 @@
 
 export default function HowToSuccessfully() {
   return (
-    <section className="w-full bg-[#edf3f4] py-12 px-4">
+    <section className="w-full py-12 px-4">
       <div className="mx-auto max-w-6xl">
         <div className="rounded-xl bg-gradient-to-r from-sky-500 to-purple-500 px-6 py-10 text-center shadow-md sm:px-10 sm:py-12">
           

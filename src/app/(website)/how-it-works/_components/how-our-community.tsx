@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function HowOurCommunity() {
   return (
-    <section className="w-full bg-[#eef3f4] py-12 md:py-16 lg:py-20">
+    <section className="w-full py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
           {/* Left Image */}

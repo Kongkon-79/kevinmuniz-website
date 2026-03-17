@@ -24,7 +24,7 @@ const features = [
 
 export default function WhyOurPlatformSection() {
   return (
-    <section className="w-full bg-[#edf2f4] py-16 md:py-24">
+    <section className="w-full py-10 md:py-14 lg:py-16">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
