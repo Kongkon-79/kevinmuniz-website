@@ -24,6 +24,7 @@ export interface CreatorCampaign {
   createdBy?: CreatorCampaignCreator;
   approvalStatus: "pending" | "accepted" | "rejected";
   activeStatus: "active" | "inactive";
+  closedStatus?: "open" | "closed";
   totalRaised?: number;
   totalDonations?: number;
   proposedFunding?: number;

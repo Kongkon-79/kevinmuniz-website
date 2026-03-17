@@ -140,6 +140,7 @@ export default function ProfileDetailsForm({
                   <FormControl>
                     <Input {...field} readOnly className={fieldClassName} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -166,8 +167,13 @@ export default function ProfileDetailsForm({
                     Phone Number
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} readOnly className={fieldClassName} />
+                    <Input
+                      {...field}
+                      readOnly={!isEditing}
+                      className={fieldClassName}
+                    />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

@@ -71,6 +71,36 @@ export const updateCampaign = async (
   return response.data.data;
 };
 
+export const closeCampaign = async (
+  token: string,
+  id: string
+): Promise<CreatorCampaign> => {
+  const response = await axios.put(
+    `${API_URL}/campaign/${id}/close`,
+    {},
+    {
+      headers: getAuthHeaders(token),
+    }
+  );
+
+  return response.data.data;
+};
+
+export const openCampaign = async (
+  token: string,
+  id: string
+): Promise<CreatorCampaign> => {
+  const response = await axios.put(
+    `${API_URL}/campaign/${id}/open`,
+    {},
+    {
+      headers: getAuthHeaders(token),
+    }
+  );
+
+  return response.data.data;
+};
+
 export const fetchCategories = async (
   token: string
 ): Promise<CategoryListResponse> => {

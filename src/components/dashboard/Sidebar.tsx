@@ -71,7 +71,7 @@ export default function DashboardSidebar() {
         ]
       : [
           ...backerLinks,
-          { name: 'Setting', href: '/dashboard/settings', icon: Settings },
+          { name: 'Settings', href: '/dashboard/settings', icon: Settings },
         ]
 
   const isLinkActive = (href: string) => {

@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { ArrowLeft, Calendar, Clock, MapPin, Users } from 'lucide-react'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
-import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { Badge } from '@/components/ui/badge'
@@ -18,7 +18,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { fetchCampaignById } from '../api'
+import CampaignStatusModal from '../_components/CampaignStatusModal'
+import { closeCampaign, fetchCampaignById, openCampaign } from '../api'
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
@@ -43,11 +44,38 @@ export default function CreatorCampaignDetailPage() {
   const params = useParams<{ id: string }>()
   const { data: session } = useSession()
   const token = session?.user?.accessToken || ''
+  const queryClient = useQueryClient()
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false)
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['creator-campaign', params.id],
     queryFn: () => fetchCampaignById(token, params.id),
     enabled: !!token && !!params.id,
+  })
+
+  const campaignStatusMutation = useMutation({
+    mutationFn: async (action: 'open' | 'close') => {
+      if (action === 'close') {
+        return closeCampaign(token, params.id)
+      }
+
+      return openCampaign(token, params.id)
+    },
+    onSuccess: (_, action) => {
+      toast.success(
+        action === 'close'
+          ? 'Campaign closed successfully.'
+          : 'Campaign opened successfully.'
+      )
+      setIsStatusModalOpen(false)
+      queryClient.invalidateQueries({ queryKey: ['creator-campaign', params.id] })
+      queryClient.invalidateQueries({ queryKey: ['my-campaigns'] })
+    },
+    onError: error => {
+      const message =
+        error instanceof Error ? error.message : 'Failed to update campaign status.'
+      toast.error(message)
+    },
   })
 
   useEffect(() => {
@@ -77,6 +105,7 @@ export default function CreatorCampaignDetailPage() {
   }
 
   const { campaign, totalRaised, totalDonations, donors } = data
+  const isClosed = campaign.closedStatus === 'closed'
   const creatorName = [campaign.createdBy?.firstName, campaign.createdBy?.lastName]
     .filter(Boolean)
     .join(' ')
@@ -248,16 +277,15 @@ export default function CreatorCampaignDetailPage() {
                 <div className="space-y-3 border-t border-[#E9EEF5] pt-6">
                   <Button
                     type="button"
-                    onClick={() => toast.info('Coming soon')}
+                    onClick={() => setIsStatusModalOpen(true)}
+                    disabled={campaignStatusMutation.isPending}
                     className={
-                      campaign.activeStatus === 'active'
-                        ? 'h-14 w-full rounded-full bg-[#EF4444] font-semibold text-white hover:bg-[#DC2626]'
-                        : 'h-14 w-full rounded-full bg-[#0E9F6E] font-semibold text-white hover:bg-[#0C8A61]'
+                      isClosed
+                        ? 'h-14 w-full rounded-full bg-[#0E9F6E] font-semibold text-white hover:bg-[#0C8A61] disabled:opacity-70'
+                        : 'h-14 w-full rounded-full bg-[#EF4444] font-semibold text-white hover:bg-[#DC2626] disabled:opacity-70'
                     }
                   >
-                    {campaign.activeStatus === 'active'
-                      ? 'Close Campaign'
-                      : 'Open Campaign'}
+                    {isClosed ? 'Open Campaign' : 'Close Campaign'}
                   </Button>
                   <Button
                     type="button"
@@ -333,6 +361,17 @@ export default function CreatorCampaignDetailPage() {
           </Table>
         </div>
       </div>
+
+      <CampaignStatusModal
+        isOpen={isStatusModalOpen}
+        isClosing={!isClosed}
+        isPending={campaignStatusMutation.isPending}
+        campaignTitle={campaign.title}
+        onClose={() => setIsStatusModalOpen(false)}
+        onConfirm={() =>
+          campaignStatusMutation.mutate(isClosed ? 'open' : 'close')
+        }
+      />
     </div>
   )
 }

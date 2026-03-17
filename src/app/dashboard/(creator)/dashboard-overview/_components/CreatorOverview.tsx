@@ -188,7 +188,7 @@ export default function CreatorOverview() {
                   My Campaigns
                 </h2>
                 <Link
-                  href="/dashboard/campaigns"
+                  href="/dashboard/my-campaigns"
                   className="text-sm font-semibold text-[#2EABFC] transition-opacity hover:opacity-80"
                 >
                   See All
