@@ -34,7 +34,10 @@ const faqItems = [
     <div>
       <section className="py-10 md:py-14 lg:py-16 bg-white">
         <div className="container ">
-          <h4 className='text-3xl md:text-4xl lg:text-5xl text-center font-bold leading-[120%] text-[#131313] pb-4'>FAQ</h4>
+
+           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-normal text-[#131313] text-center">
+           FAQ
+          </h2>
       
           <Accordion type="single" collapsible className="w-full">
             {faqItems?.map((item, index) => (
