@@ -1,7 +1,9 @@
 "use client";
 
 import * as React from "react";
-import Autoplay from "embla-carousel-autoplay";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { Sparkles } from "lucide-react";
 
 import {
   Carousel,
@@ -12,106 +14,141 @@ import {
 } from "@/components/ui/carousel";
 import CampaignCard, { CampaignItem } from "./campaign-card";
 
-const campaigns: CampaignItem[] = [
-  {
-    id: 1,
-    title: "Shadows of Tomorrow",
-    category: "Sci-Fi Drama",
-    description:
-      "A grieving scientist risks reality itself to rewrite the past — but altering time may cost him the very future he is trying to save. After losing his wife in a tragic accident, brilliant quantum physicist Dr. Elias Rowan becomes obsessed with a radical theory that time is not fixed, but flexible. Working in secret, he develops a machine capable of opening fractures in time, only to discover that every change creates deeper consequences.",
-    image:
-      "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200&auto=format&fit=crop",
-    expiresIn: "7 days",
-  },
-  {
-    id: 2,
-    title: "The Last Rehearsal",
-    category: "Drama / Mystery",
-    description:
-      "On the eve of a final stage production, a forgotten letter resurfaces and threatens to expose decades of buried secrets among a legendary theater group. As tensions rise backstage, each actor must confront the truth behind the performance that made them famous.",
-    image:
-      "https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1200&auto=format&fit=crop",
-    expiresIn: "5 days",
-  },
-  {
-    id: 3,
-    title: "Red Room Archive",
-    category: "Psychological Thriller",
-    description:
-      "A young archivist discovers a hidden room filled with forbidden recordings that reveal a pattern of disappearances connected to the city’s most powerful elite. The deeper she investigates, the more she realizes she may already be part of the story.",
-    image:
-      "https://images.unsplash.com/photo-1513001900722-370f803f498d?q=80&w=1200&auto=format&fit=crop",
-    expiresIn: "5 days",
-  },
-  {
-    id: 4,
-    title: "Waves Between Us",
-    category: "Romantic Drama",
-    description:
-      "Two strangers from different worlds meet on a remote coastal island and form an unexpected bond while rebuilding their lives after personal loss. But when reality calls them back, they must decide whether love is enough to bridge the distance between them.",
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop",
-    expiresIn: "7 days",
-  },
-  {
-    id: 5,
-    title: "Ashes of the Crown",
-    category: "Historical Epic",
-    description:
-      "In a kingdom on the brink of collapse, an exiled heir returns under a false identity to expose the conspiracy that destroyed his family. Torn between vengeance and duty, he must choose whether to reclaim the throne or destroy it forever.",
-    image:
-      "https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=1200&auto=format&fit=crop",
-    expiresIn: "6 days",
-  },
-];
+type FeaturedCampaignApiItem = {
+  _id: string;
+  title: string;
+  shortDescription: string;
+  image: string;
+  endDate: string;
+  category?: {
+    name?: string;
+  } | null;
+};
 
-export default function FeaturedCampaignsSection() {
-  const plugin = React.useRef(
-    Autoplay({
-      delay: 2500,
-      stopOnInteraction: true,
-      stopOnMouseEnter: true,
-    })
+type FeaturedCampaignsResponse = {
+  data: FeaturedCampaignApiItem[];
+};
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+const getDaysLeftLabel = (endDate: string) => {
+  const diff = new Date(endDate).getTime() - Date.now();
+  const daysLeft = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+
+  if (daysLeft === 0) {
+    return "Closing today";
+  }
+
+  if (daysLeft === 1) {
+    return "1 day left";
+  }
+
+  return `${daysLeft} days left`;
+};
+
+const fetchFeaturedCampaigns = async (): Promise<CampaignItem[]> => {
+  const response = await axios.get<{ data: FeaturedCampaignsResponse }>(
+    `${API_URL}/campaign`,
+    {
+      params: {
+        approvalStatus: "accepted",
+        activeStatus: "active",
+        page: 1,
+        limit: 8,
+      },
+    }
   );
 
+  return (response.data.data?.data || []).map((campaign) => ({
+    id: campaign._id,
+    title: campaign.title,
+    category: campaign.category?.name || "Featured Project",
+    description: campaign.shortDescription,
+    image: campaign.image || "/assets/images/autoLogo.png",
+    expiresIn: getDaysLeftLabel(campaign.endDate),
+  }));
+};
+
+export default function FeaturedCampaignsSection() {
+  const { data: campaigns = [], isLoading } = useQuery({
+    queryKey: ["featured-campaigns"],
+    queryFn: fetchFeaturedCampaigns,
+  });
+
+  const displayCampaigns = React.useMemo(() => {
+    if (campaigns.length <= 1) {
+      return campaigns;
+    }
+
+    if (campaigns.length <= 3) {
+      return [...campaigns, ...campaigns];
+    }
+
+    return campaigns;
+  }, [campaigns]);
+
   return (
-    <section className="w-full py-10 md:py-14 lg:py-16">
+    <section className="w-full overflow-hidden py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4">
+        <div className="absolute inset-x-6 top-10 -z-10 h-56 rounded-full bg-[radial-gradient(circle,rgba(46,171,252,0.12),transparent_62%)] blur-3xl" />
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D8ECFF] bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-[#2EABFC] shadow-sm">
+            <Sparkles className="h-4 w-4" />
+            Spotlight Picks
+          </div>
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
             Featured Campaigns
           </h2>
-          <p className="mt-3 text-sm leading-6 text-slate-500 md:text-base">
+          <p className="mt-3 text-sm leading-7 text-slate-500 md:text-base">
             Discover original movie projects currently seeking cast,
             producers, and investment partners.
           </p>
         </div>
 
-        <div className="relative mt-12">
-          <Carousel
-            plugins={[plugin.current]}
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
-          >
-            <CarouselContent className="-ml-4">
-              {campaigns.map((campaign) => (
-                <CarouselItem
-                  key={campaign.id}
-                  className="pl-4 sm:basis-1/2 lg:basis-1/3 xl:basis-[28%]"
-                >
-                  <CampaignCard campaign={campaign} />
-                </CarouselItem>
+        <div className="mt-12">
+          {isLoading ? (
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="h-[520px] animate-pulse rounded-[26px] border border-[#DDEEFE] bg-white/70"
+                />
               ))}
-            </CarouselContent>
+            </div>
+          ) : displayCampaigns.length > 0 ? (
+            <div className="relative py-2">
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-6">
+                  {displayCampaigns.map((campaign, index) => (
+                    <CarouselItem
+                      key={`${campaign.id}-${index}`}
+                      className="pl-6 sm:basis-1/2 xl:basis-1/3"
+                    >
+                      <CampaignCard campaign={campaign} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
 
-            <CarouselPrevious className="-left-3 hidden border-slate-200 bg-white text-slate-700 shadow-sm md:flex" />
-            <CarouselNext className="-right-3 hidden border-slate-200 bg-white text-slate-700 shadow-sm md:flex" />
-          </Carousel>
+                <CarouselPrevious className="-left-4 top-1/2 z-20 h-12 w-12 border-[#CFE3F7] bg-white text-[#1D4ED8] shadow-[0_10px_24px_rgba(46,171,252,0.16)] hover:bg-[#F4FAFF] hover:text-[#0F8FE6] disabled:border-[#E8EEF5] disabled:bg-[#F8FBFE] disabled:text-[#9FB8CC] disabled:opacity-100 md:-left-6" />
+                <CarouselNext className="-right-4 top-1/2 z-20 h-12 w-12 border-[#CFE3F7] bg-white text-[#1D4ED8] shadow-[0_10px_24px_rgba(46,171,252,0.16)] hover:bg-[#F4FAFF] hover:text-[#0F8FE6] disabled:border-[#E8EEF5] disabled:bg-[#F8FBFE] disabled:text-[#9FB8CC] disabled:opacity-100 md:-right-6" />
+              </Carousel>
+            </div>
+          ) : (
+            <div className="rounded-[28px] border border-dashed border-[#CFE4F9] bg-white/80 px-6 py-14 text-center shadow-sm">
+              <p className="text-lg font-semibold text-[#111827]">
+                Featured campaigns are coming soon.
+              </p>
+              <p className="mt-2 text-sm text-[#6B7280]">
+                New active campaigns will appear here automatically.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>
