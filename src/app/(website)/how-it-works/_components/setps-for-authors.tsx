@@ -23,7 +23,7 @@ export default function StepsForAuthors() {
   ];
 
   return (
-    <section className="w-full bg-[#edf2f3] py-14 sm:py-16 lg:py-20">
+    <section className="w-full py-14 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">

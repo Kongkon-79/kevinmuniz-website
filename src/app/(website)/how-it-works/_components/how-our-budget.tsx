@@ -66,13 +66,13 @@ function BudgetSystemCard({ title, description, icon }: BudgetCard) {
 
 export default function BudgetSystemWorksSection() {
   return (
-    <section className="w-full bg-[#f3f4f6] py-14 sm:py-16 lg:py-20">
+    <section className="w-full bg-white py-14 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-[28px] font-semibold leading-tight text-[#2f2f2f] sm:text-[34px] lg:text-[42px]">
+        <div className="">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-normal text-[#2C2C2C] text-center">
             How Our Budget System Works
           </h2>
-          <p className="mt-3 text-sm text-[#8b9199] sm:text-base">
+          <p className="mt-3 text-base md:text-lg font-medium leading-normal text-[#8B8B8B] text-center">
             Learn how to get your book adapted in a few easy steps
           </p>
         </div>

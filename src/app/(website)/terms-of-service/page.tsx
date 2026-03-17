@@ -1,8 +1,11 @@
 import React from 'react'
+import TermsOfServiceContainer from './_components/terms-of-service-container'
 
 const TermsOfService = () => {
   return (
-    <div>TermsOfService</div>
+    <div>
+      <TermsOfServiceContainer/>
+    </div>
   )
 }
 

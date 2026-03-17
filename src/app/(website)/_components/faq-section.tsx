@@ -32,7 +32,7 @@ const faqItems = [
 
   return (
     <div>
-      <section className="py-6 md:py-12 lg:py-20 bg-white">
+      <section className="py-10 md:py-14 lg:py-16 bg-white">
         <div className="container ">
           <h4 className='text-3xl md:text-4xl lg:text-5xl text-center font-bold leading-[120%] text-[#131313] pb-4'>FAQ</h4>
       

@@ -9,13 +9,13 @@ import BudgetSystemWorksSection from "./_components/how-our-budget";
 
 const HowItWorks = () => {
   return (
-    <div>
+    <div >
       <HowItWorksHero />
       <StepsForAuthors />
       <HowToSuccessfully />
       <StepsForFilmIndustryProfessionals />
-      <BudgetSystemWorksSection/>
       <StepsForFilm />
+      <BudgetSystemWorksSection/>
       <HowOurCommunity />
     </div>
   );

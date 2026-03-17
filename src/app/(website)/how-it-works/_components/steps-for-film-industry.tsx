@@ -23,7 +23,7 @@ export default function StepsForFilmIndustryProfessionals() {
   ];
 
   return (
-    <section className="w-full bg-[#edf3f4] py-14 sm:py-16 lg:py-20">
+    <section className="w-full py-14 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-[28px] font-semibold leading-tight text-[#2f2f2f] sm:text-[34px] lg:text-[42px]">
