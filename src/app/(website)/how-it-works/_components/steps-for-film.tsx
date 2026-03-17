@@ -34,7 +34,7 @@ const faqItems = [
     <div>
       <section className="py-6 md:py-12 lg:py-20">
         <div className="container ">
-          <div className="">
+          <div className="pb-6 md:pb-8 lg:pb-12">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-normal text-[#2C2C2C] text-center">
             Steps For Film Industry Professionals
           </h2>
@@ -48,7 +48,7 @@ const faqItems = [
               <AccordionItem
                 key={index+1}
                value={`item-${index}`}
-                className="bg-white mb-1"
+                className=" mb-1"
               >
                 <AccordionTrigger className="hover:no-underline py-[14px] px-6 text-left  border-b border-[#C3C3C3]">
                   <div className="flex items-center gap-6">

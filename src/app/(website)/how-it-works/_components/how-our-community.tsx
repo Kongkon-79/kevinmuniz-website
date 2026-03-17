@@ -22,16 +22,15 @@ export default function HowOurCommunity() {
           </div>
 
           {/* Right Content */}
-          <div className="mx-auto w-full max-w-[560px] text-left">
-            <h2 className="text-3xl font-semibold leading-tight text-gray-900 sm:text-4xl lg:text-[42px] lg:leading-[1.15]">
-              How Our Community
+          <div className="">
+             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-normal text-[#2C2C2C] text-left">
+            How Our Community
               <br className="hidden sm:block" />
               Generates Revenue
-            </h2>
-
-            <p className="mt-5 text-lg font-semibold leading-relaxed text-gray-800 sm:text-xl">
-              Committed to ensuring fair and inclusive opportunities for all
-            </p>
+          </h2>
+          <p className="mt-3 text-lg md:text-xl font-medium leading-normal text-[#2C2C2C] text-left">
+            Committed to ensuring fair and inclusive opportunities for all
+          </p>
 
             <p className="mt-4 text-sm leading-7 text-gray-600 sm:text-base">
               If you choose to invest in a story that interests you, you will

@@ -26,11 +26,12 @@ export default function StepsForAuthors() {
     <section className="w-full py-14 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-[#2d2d2d] sm:text-3xl lg:text-[42px]">
-            Steps For Authors
+        <div className="">
+
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-normal text-[#2C2C2C] text-center">
+                Steps For Authors
           </h2>
-          <p className="mt-2 text-sm text-[#8a8f98] sm:text-base">
+          <p className="mt-3 text-base md:text-lg font-medium leading-normal text-[#8B8B8B] text-center">
             Learn how to get your book adapted in a few easy steps
           </p>
         </div>
