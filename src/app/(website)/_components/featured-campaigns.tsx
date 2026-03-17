@@ -128,7 +128,7 @@ export default function FeaturedCampaignsSection() {
                   {displayCampaigns.map((campaign, index) => (
                     <CarouselItem
                       key={`${campaign.id}-${index}`}
-                      className="pl-6 sm:basis-1/2 xl:basis-1/3"
+                       className="pl-6 sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                     >
                       <CampaignCard campaign={campaign} />
                     </CarouselItem>

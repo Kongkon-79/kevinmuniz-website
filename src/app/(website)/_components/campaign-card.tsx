@@ -59,7 +59,7 @@ export default function CampaignCard({ campaign }: CampaignCardProps) {
       </div>
 
       <CardContent className="flex h-[300px] flex-col p-6 pb-8">
-        <h3 className="line-clamp-2 text-[28px] font-semibold leading-tight text-slate-900 md:text-[30px]">
+        <h3 className="line-clamp-2 text-xl md:text-2xl lg:text-[28px] font-semibold leading-tight text-slate-900">
           {campaign.title}
         </h3>
 
