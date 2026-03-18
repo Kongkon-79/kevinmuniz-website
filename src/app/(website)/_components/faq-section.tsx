@@ -10,24 +10,35 @@ import {
 export function FaqSection() {
 const faqItems = [
     {
-      question: "How is this different from crowdfunding platforms?",
-      answer:
-        "Analytic Soccer is the first data platform for amateur players, offering ratings, technical–tactical analysis, structured feedback and highlights based on your game footage.",
-    },
-    {
       question: "Who can create a campaign?",
       answer:
-        "You send us your game video and team sheet, we analyze the match, and you receive your ratings, your structured feedback  and highlights within 72 hours.",
+        "On this platform, campaign creators are primarily the intellectual property owners, who retain 100% of the rights to their story, whether it is a book, graphic novel, or other original work that has been published.",
     },
     {
       question: "Who can join as a backer?",
       answer:
-        "For boys and girls from U9 to U18+, as well as teams, coaches, scouts, and parents who want real performance insight.",
+        "Primarily individuals working in film or television who are interested in supporting the intellectual property they admire.",
     },
     {
-      question: "Is funding handled on the platform?",
-      answer: "Just your game video and the team sheet with player names and positions. If possible, please also send the team lineup in case the players’ jerseys aren’t clearly visible.",
-    }
+      question: "What types of intellectual property do you accept on this platform?",
+      answer:
+        "Our platform accepts any story that has been published, and you can prove that you fully own the rights to your story.",
+    },
+    {
+      question: "Can I submit an IP that has not yet been published?",
+      answer:
+        "Due to legal considerations, we refrain from engaging with unpublished works. However, we encourage you to join our community, where numerous self-published authors offer valuable guidance on transforming a screenplay into a successful and impactful intellectual property.",
+    },
+    {
+      question: "Am I required to make an upfront payment for the projects I choose to finance on this platform?",
+      answer:
+        "Our platform operates on a pledge-based system, where you are only charged if the project successfully reaches its funding goals.",
+    },
+    {
+      question: "I am the author of the story. How do I ensure my project gets developed into a film?",
+      answer:
+        "Before your project becomes an active campaign, it must be requested for production by a recognized industry producer. This ensures that your project will proceed to pre-production once the funding goal is achieved.",
+    },
   ];
 
   return (

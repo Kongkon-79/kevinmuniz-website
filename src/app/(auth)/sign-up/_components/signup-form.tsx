@@ -145,7 +145,7 @@ const SignupForm = () => {
         <div className="flex w-full items-center justify-center pb-4">
           <Link href="/">
             <Image
-              src="/assets/images/autoLogo.png"
+              src="/assets/images/logo.png"
               alt="auth logo"
               width={500}
               height={500}

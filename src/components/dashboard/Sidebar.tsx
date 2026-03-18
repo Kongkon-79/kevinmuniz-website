@@ -108,14 +108,14 @@ export default function DashboardSidebar() {
   return (
     <>
       <div className="hidden md:fixed md:inset-y-0 md:left-0 md:z-30 md:flex md:w-[320px] md:flex-col md:overflow-y-auto md:bg-white">
-        <div className="flex justify-center px-6 pb-4 pt-8">
+        <div className="flex justify-center px-6 pb-5 pt-8">
           <Link href={dashboardHome} className="inline-flex">
             <Image
-              src="/assets/images/autoLogo.png"
-              alt="Kevin Muniz"
+              src="/assets/images/logo.png"
+              alt="Hierarchy of Visionaries"
               width={110}
               height={110}
-              className="h-[86px] w-[86px] object-contain"
+              className="h-[52px] w-auto object-contain"
             />
           </Link>
         </div>

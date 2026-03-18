@@ -29,15 +29,11 @@ export default function HowOurCommunity() {
               Generates Revenue
           </h2>
           <p className="mt-3 text-lg md:text-xl font-medium leading-normal text-[#2C2C2C] text-left">
-            Committed to ensuring fair and inclusive opportunities for all
+            A transparent model that rewards both IP owners and supporters
           </p>
 
             <p className="mt-4 text-sm leading-7 text-gray-600 sm:text-base">
-              If you choose to invest in a story that interests you, you will
-              receive a percentage of the profits proportional to your initial
-              investment. IP owners will receive 10% upfront. Once the project
-              enters development and begins generating profit, they will receive
-              an additional 5% of the earnings.
+              If the campaign is successful, IP owners will receive 7% of the campaign&apos;s target amount before production as a reward for creating the intellectual property. Backers will receive a return on their contribution, proportional to the percentage they donated, but only if the project generates revenue.
             </p>
           </div>
         </div>

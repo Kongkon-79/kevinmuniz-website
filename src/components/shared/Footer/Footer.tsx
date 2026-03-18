@@ -7,14 +7,14 @@ const Footer = () => {
     <div className="">
       <div className="bg-primary py-8 md:py-10">
         <div className="container flex flex-col md:flex-row items-center justify-center gap-10 md:gap-14 lg:gap-28">
-          <div>
-            <Link href="/" className=" flex items-center gap-2">
+          <div className="flex justify-center">
+            <Link href="/" className="flex items-center">
               <Image
-                src="/assets/images/autoLogo.png"
-                alt="logo"
+                src="/assets/images/logo.png"
+                alt="Hierarchy of Visionaries"
                 width={1000}
                 height={1000}
-                className="w-[174px] h-[174px] object-fit"
+                className="h-[68px] w-auto object-contain md:h-[78px]"
               />
             </Link>
           </div>

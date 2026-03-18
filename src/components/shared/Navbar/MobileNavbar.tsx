@@ -27,13 +27,13 @@ const MobileNavbar = () => {
         <SheetContent side="right" className="w-[300px] sm:w-[400px]">
           <div className="flex flex-col h-full">
             <div className="flex items-center justify-between mb-8">
-              <Link href="/" onClick={closeSheet}>
+              <Link href="/" onClick={closeSheet} className="flex items-center">
                 <Image
-                  src={"/assets/images/logo.jpg"}
-                  alt="logo"
+                  src={"/assets/images/main_logo.png"}
+                  alt="Hierarchy of Visionaries"
                   width={1000}
                   height={1000}
-                  className="h-[60px] w-[150px]"
+                  className="h-[44px] w-auto object-contain sm:h-[50px]"
                 />
               </Link>
             </div>

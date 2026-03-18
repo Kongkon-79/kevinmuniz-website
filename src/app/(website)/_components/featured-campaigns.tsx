@@ -91,21 +91,21 @@ export default function FeaturedCampaignsSection() {
     <section className="w-full overflow-hidden py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4">
         <div className="absolute inset-x-6 top-10 -z-10 h-56 rounded-full bg-[radial-gradient(circle,rgba(46,171,252,0.12),transparent_62%)] blur-3xl" />
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D8ECFF] bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-[#2EABFC] shadow-sm">
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D8ECFF] bg-white/80 px-4 py-2 text-sm font-semibold text-[#2EABFC] shadow-sm">
             <Sparkles className="h-4 w-4" />
             Spotlight Picks
           </div>
-          <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
+          <h2 className="mt-4 text-[28px] font-bold leading-[1.15] text-slate-900 md:text-[36px]">
             Featured Campaigns
           </h2>
-          <p className="mt-3 text-sm leading-7 text-slate-500 md:text-base">
+          <p className="mt-4 max-w-2xl mx-auto text-base leading-7 text-slate-500 md:text-lg">
             Discover original movie projects currently seeking cast,
             producers, and investment partners.
           </p>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-10 md:mt-12">
           {isLoading ? (
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {Array.from({ length: 3 }).map((_, index) => (
