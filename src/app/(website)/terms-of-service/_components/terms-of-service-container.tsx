@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { extractCmsDescription } from "@/lib/cms";
 
 const TermsOfServiceContainer = () => {
   const { data, isLoading, isError, error } = useQuery({
@@ -15,7 +16,7 @@ const TermsOfServiceContainer = () => {
     },
   });
 
-  const description = data?.data?.description;
+  const description = extractCmsDescription(data);
 
   // ✅ Professional Loading UI
   if (isLoading) {
@@ -53,7 +54,7 @@ const TermsOfServiceContainer = () => {
   return (
     <div className="container px-4 py-10 md:py-14 lg:py-20">
       <div
-        className="prose max-w-none"
+        className="rich-content"
         dangerouslySetInnerHTML={{ __html: description }}
       />
     </div>
