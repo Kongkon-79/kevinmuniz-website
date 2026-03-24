@@ -15,7 +15,12 @@ const getAuthHeaders = (token: string) => ({
 export const fetchMyCampaigns = async (
   token: string,
   page: number,
-  filters: { approvalStatus?: string; activeStatus?: string; search?: string }
+  filters: {
+    approvalStatus?: string
+    activeStatus?: string
+    search?: string
+    categoryId?: string
+  }
 ): Promise<CreatorCampaignsResponse> => {
   const response = await axios.get(`${API_URL}/campaign`, {
     params: {
@@ -24,6 +29,7 @@ export const fetchMyCampaigns = async (
       approvalStatus: filters.approvalStatus,
       activeStatus: filters.activeStatus,
       search: filters.search,
+      categoryIds: filters.categoryId,
     },
     headers: getAuthHeaders(token),
   });

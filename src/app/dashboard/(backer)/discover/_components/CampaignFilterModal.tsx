@@ -57,6 +57,18 @@ export default function CampaignFilterModal({
             </p>
           </DialogHeader>
 
+          {!!draftCategoryIds.length && (
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-medium uppercase tracking-[0.18em] text-[#9AA0A6]">
+                Selected
+              </span>
+              <span className="rounded-full bg-[#F3FAFF] px-3 py-1 text-xs font-medium text-[#2EABFC]">
+                {draftCategoryIds.length} category
+                {draftCategoryIds.length > 1 ? 'ies' : 'y'}
+              </span>
+            </div>
+          )}
+
           <div className="max-h-[320px] space-y-3 overflow-y-auto pr-1">
             {categories.map(category => (
               <label

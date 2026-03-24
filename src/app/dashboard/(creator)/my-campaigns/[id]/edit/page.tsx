@@ -174,11 +174,18 @@ export default function EditCampaignPage() {
               <FormField
                 control={form.control}
                 name="title"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <FormLabel>Campaign Title*</FormLabel>
                     <FormControl>
-                      <Input {...field} className={fieldClassName} />
+                      <Input
+                        {...field}
+                        className={cn(
+                          fieldClassName,
+                          fieldState.error &&
+                            'border-[#EF4444] focus-visible:ring-[#EF4444]',
+                        )}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -187,11 +194,18 @@ export default function EditCampaignPage() {
               <FormField
                 control={form.control}
                 name="shortDescription"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <FormLabel>Short Description*</FormLabel>
                     <FormControl>
-                      <Input {...field} className={fieldClassName} />
+                      <Input
+                        {...field}
+                        className={cn(
+                          fieldClassName,
+                          fieldState.error &&
+                            'border-[#EF4444] focus-visible:ring-[#EF4444]',
+                        )}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -200,12 +214,24 @@ export default function EditCampaignPage() {
               <FormField
                 control={form.control}
                 name="category"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <FormLabel>Genre/Category*</FormLabel>
-                    <Select value={field.value} onValueChange={field.onChange}>
+                    <Select
+                      value={field.value}
+                      onValueChange={value => {
+                        field.onChange(value)
+                        void form.trigger('category')
+                      }}
+                    >
                       <FormControl>
-                        <SelectTrigger className={fieldClassName}>
+                        <SelectTrigger
+                          className={cn(
+                            fieldClassName,
+                            fieldState.error &&
+                              'border-[#EF4444] focus:ring-[#EF4444]',
+                          )}
+                        >
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
                       </FormControl>
@@ -224,11 +250,18 @@ export default function EditCampaignPage() {
               <FormField
                 control={form.control}
                 name="location"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <FormLabel>Story Location*</FormLabel>
                     <FormControl>
-                      <Input {...field} className={fieldClassName} />
+                      <Input
+                        {...field}
+                        className={cn(
+                          fieldClassName,
+                          fieldState.error &&
+                            'border-[#EF4444] focus-visible:ring-[#EF4444]',
+                        )}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -237,14 +270,18 @@ export default function EditCampaignPage() {
               <FormField
                 control={form.control}
                 name="proposedFunding"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <FormLabel>Proposed Funding</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="number"
-                        className={fieldClassName}
+                        className={cn(
+                          fieldClassName,
+                          fieldState.error &&
+                            'border-[#EF4444] focus-visible:ring-[#EF4444]',
+                        )}
                         value={field.value ?? ''}
                         onChange={event =>
                           field.onChange(
@@ -263,7 +300,7 @@ export default function EditCampaignPage() {
                 <FormField
                   control={form.control}
                   name="creatingDate"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Campaign Length / Start Date*</FormLabel>
                       <Popover>
@@ -274,6 +311,9 @@ export default function EditCampaignPage() {
                               className={cn(
                                 fieldClassName,
                                 'justify-between px-4 font-normal',
+                                !field.value && 'text-[#B1B5BD]',
+                                fieldState.error &&
+                                  'border-[#EF4444] text-[#EF4444] focus:ring-[#EF4444]',
                               )}
                             >
                               {field.value
@@ -287,17 +327,21 @@ export default function EditCampaignPage() {
                           <Calendar
                             mode="single"
                             selected={field.value}
-                            onSelect={field.onChange}
+                            onSelect={date => {
+                              field.onChange(date)
+                              void form.trigger(['creatingDate', 'endDate'])
+                            }}
                           />
                         </PopoverContent>
                       </Popover>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
                 <FormField
                   control={form.control}
                   name="endDate"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Campaign Length / End Date*</FormLabel>
                       <Popover>
@@ -308,6 +352,9 @@ export default function EditCampaignPage() {
                               className={cn(
                                 fieldClassName,
                                 'justify-between px-4 font-normal',
+                                !field.value && 'text-[#B1B5BD]',
+                                fieldState.error &&
+                                  'border-[#EF4444] text-[#EF4444] focus:ring-[#EF4444]',
                               )}
                             >
                               {field.value
@@ -321,10 +368,18 @@ export default function EditCampaignPage() {
                           <Calendar
                             mode="single"
                             selected={field.value}
-                            onSelect={field.onChange}
+                            onSelect={date => {
+                              field.onChange(date)
+                              void form.trigger('endDate')
+                            }}
+                            disabled={date =>
+                              !!form.getValues('creatingDate') &&
+                              date < form.getValues('creatingDate')
+                            }
                           />
                         </PopoverContent>
                       </Popover>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -340,12 +395,16 @@ export default function EditCampaignPage() {
               <FormField
                 control={form.control}
                 name="campaignDetails"
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <FormItem>
                     <FormControl>
                       <CampaignDetailsEditor
                         value={field.value}
-                        onChange={field.onChange}
+                        onChange={value => {
+                          field.onChange(value)
+                          void form.trigger('campaignDetails')
+                        }}
+                        className={cn(fieldState.error && 'border-[#EF4444]')}
                       />
                     </FormControl>
                     <FormDescription className="text-xs text-[#2EABFC]">
@@ -368,7 +427,7 @@ export default function EditCampaignPage() {
               <FormField
                 control={form.control}
                 name="image"
-                render={() => (
+                render={({ fieldState }) => (
                   <FormItem>
                     <FormLabel>Upload Cover Image</FormLabel>
                     <FormControl>
@@ -382,10 +441,15 @@ export default function EditCampaignPage() {
                             fileInputRef.current?.click()
                           }
                         }}
-                        className="flex min-h-[210px] cursor-pointer items-center justify-center rounded-[12px] border border-dashed border-[#D5DAE1] bg-[#FBFBFB] p-4"
+                        className={cn(
+                          'flex min-h-[300px] cursor-pointer items-center justify-center rounded-[12px] border border-dashed bg-[#FBFBFB] p-4',
+                          fieldState.error
+                            ? 'border-[#EF4444]'
+                            : 'border-[#D5DAE1]',
+                        )}
                       >
                         {imagePreview ? (
-                          <div className="relative h-[180px] w-full overflow-hidden rounded-[12px]">
+                          <div className="relative h-[260px] w-full overflow-hidden rounded-[12px]">
                             <Image
                               src={imagePreview}
                               alt="Campaign preview"

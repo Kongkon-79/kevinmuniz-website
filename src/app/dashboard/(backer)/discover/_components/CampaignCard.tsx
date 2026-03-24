@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { CalendarDays, MapPin, Wallet } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { DiscoverCampaign } from '../types'
 
@@ -20,8 +21,21 @@ export default function CampaignCard({
   onProduce,
 }: CampaignCardProps) {
   const router = useRouter()
+  const isInactive = campaign.activeStatus === 'inactive'
   const activeStatusLabel =
     campaign.activeStatus.charAt(0).toUpperCase() + campaign.activeStatus.slice(1)
+  const projectDuration = `${new Date(campaign.creatingDate).toLocaleDateString(
+    'en-US',
+    {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    },
+  )} - ${new Date(campaign.endDate).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })}`
 
   return (
     <div className="overflow-hidden rounded-[14px] bg-white p-3 shadow-[0_4px_14px_rgba(17,24,39,0.04)]">
@@ -54,9 +68,28 @@ export default function CampaignCard({
         </p>
 
         <div className="space-y-2">
-          <p className="text-xs font-semibold text-[#2D2D2D]">
-            ${campaign.totalRaised?.toLocaleString() ?? 0} raised
-          </p>
+          {isInactive ? (
+            <div className="space-y-2 rounded-[12px] border border-[#E8EDF3] bg-[#FBFBFB] p-3 text-xs text-[#5C5C5C]">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-3.5 w-3.5 text-[#2EABFC]" />
+                <span>{campaign.location}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Wallet className="h-3.5 w-3.5 text-[#8C5CFF]" />
+                <span>
+                  ${campaign.proposedFunding?.toLocaleString() ?? 0} proposed
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CalendarDays className="h-3.5 w-3.5 text-[#0E9F6E]" />
+                <span className="line-clamp-1">{projectDuration}</span>
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs font-semibold text-[#2D2D2D]">
+              ${campaign.totalRaised?.toLocaleString() ?? 0} raised
+            </p>
+          )}
           <span className="inline-flex rounded-full border border-[#E5E7EB] px-3 py-1 text-[10px] text-[#666666]">
             {campaign.category.name}
           </span>

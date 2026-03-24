@@ -67,6 +67,10 @@ export default function DiscoverPage() {
   }
 
   const campaigns = data?.data ?? []
+  const selectedCategories =
+    categoriesResponse?.data.filter(category =>
+      selectedCategoryIds.includes(category._id),
+    ) ?? []
 
   return (
     <>
@@ -128,6 +132,34 @@ export default function DiscoverPage() {
               )}
             </Button>
           </div>
+
+          {!!selectedCategories.length && (
+            <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-[#EEF1F5] pt-3">
+              {selectedCategories.map(category => (
+                <button
+                  key={category._id}
+                  type="button"
+                  onClick={() =>
+                    setSelectedCategoryIds(current =>
+                      current.filter(id => id !== category._id),
+                    )
+                  }
+                  className="inline-flex items-center gap-2 rounded-full border border-[#D7E8FF] bg-[#F3FAFF] px-3 py-1 text-xs font-medium text-[#2EABFC] transition-colors hover:border-[#B9D9FF] hover:bg-[#EAF6FF]"
+                >
+                  {category.name}
+                  <span className="text-sm leading-none">x</span>
+                </button>
+              ))}
+
+              <button
+                type="button"
+                onClick={() => setSelectedCategoryIds([])}
+                className="text-xs font-medium text-[#777777] transition-colors hover:text-[#2D2D2D]"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">

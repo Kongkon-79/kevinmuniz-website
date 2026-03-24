@@ -23,9 +23,12 @@ export interface DiscoverCampaign {
   category: DiscoverCampaignCategory
   location: string
   image: string
+  proposedFunding?: number
   approvalStatus: string
   activeStatus: string
   totalRaised?: number
+  totalDonations?: number
+  creatingDate: string
   endDate: string
   createdAt: string
 }

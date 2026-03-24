@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { fetchMyCampaigns } from './api'
+import { fetchCategories, fetchMyCampaigns } from './api'
 import CampaignCard from './_components/CampaignCard'
 import CampaignCardSkeleton from './_components/CampaignCardSkeleton'
 
@@ -35,10 +35,15 @@ export default function MyCampaignsPage() {
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [categoryFilter, setCategoryFilter] = useState('all')
 
   const filters = useMemo(() => {
     if (statusFilter === 'active' || statusFilter === 'inactive') {
-      return { activeStatus: statusFilter, search }
+      return {
+        activeStatus: statusFilter,
+        search,
+        categoryId: categoryFilter !== 'all' ? categoryFilter : undefined,
+      }
     }
 
     if (
@@ -46,11 +51,24 @@ export default function MyCampaignsPage() {
       statusFilter === 'accepted' ||
       statusFilter === 'rejected'
     ) {
-      return { approvalStatus: statusFilter, search }
+      return {
+        approvalStatus: statusFilter,
+        search,
+        categoryId: categoryFilter !== 'all' ? categoryFilter : undefined,
+      }
     }
 
-    return { search }
-  }, [search, statusFilter])
+    return {
+      search,
+      categoryId: categoryFilter !== 'all' ? categoryFilter : undefined,
+    }
+  }, [categoryFilter, search, statusFilter])
+
+  const { data: categoriesResponse } = useQuery({
+    queryKey: ['creator-campaign-categories'],
+    queryFn: () => fetchCategories(token),
+    enabled: !!token,
+  })
 
   const {
     data: campaignsResponse,
@@ -63,6 +81,7 @@ export default function MyCampaignsPage() {
       search,
       filters.approvalStatus,
       filters.activeStatus,
+      filters.categoryId,
     ],
     queryFn: () => fetchMyCampaigns(token, page, filters),
     enabled: !!token,
@@ -111,6 +130,26 @@ export default function MyCampaignsPage() {
           </div>
 
           <Select
+            value={categoryFilter}
+            onValueChange={value => {
+              setCategoryFilter(value)
+              setPage(1)
+            }}
+          >
+            <SelectTrigger className="h-[42px] w-full rounded-[10px] border-[#EEF1F5] bg-[#FBFBFB] text-sm lg:w-[220px]">
+              <SelectValue placeholder="All Categories" />
+            </SelectTrigger>
+            <SelectContent className="bg-white">
+              <SelectItem value="all">All Categories</SelectItem>
+              {categoriesResponse?.data.map(category => (
+                <SelectItem key={category._id} value={category._id}>
+                  {category.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select
             value={statusFilter}
             onValueChange={value => {
               setStatusFilter(value as StatusFilter)
@@ -130,6 +169,41 @@ export default function MyCampaignsPage() {
             </SelectContent>
           </Select>
         </div>
+
+        {(categoryFilter !== 'all' || statusFilter !== 'all' || search) && (
+          <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-[#EEF1F5] pt-3">
+            {search && (
+              <span className="rounded-full border border-[#D7E8FF] bg-[#F3FAFF] px-3 py-1 text-xs font-medium text-[#2EABFC]">
+                Search: {search}
+              </span>
+            )}
+            {categoryFilter !== 'all' && (
+              <span className="rounded-full border border-[#E9D8FF] bg-[#F8F1FF] px-3 py-1 text-xs font-medium text-[#8C5CFF]">
+                Category:{' '}
+                {categoriesResponse?.data.find(
+                  category => category._id === categoryFilter,
+                )?.name || 'Selected'}
+              </span>
+            )}
+            {statusFilter !== 'all' && (
+              <span className="rounded-full border border-[#E5E7EB] bg-[#F8FAFC] px-3 py-1 text-xs font-medium capitalize text-[#5C5C5C]">
+                Status: {statusFilter}
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                setSearch('')
+                setStatusFilter('all')
+                setCategoryFilter('all')
+                setPage(1)
+              }}
+              className="text-xs font-medium text-[#777777] transition-colors hover:text-[#2D2D2D]"
+            >
+              Clear all
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-2">

@@ -52,7 +52,7 @@ export function downloadReceipt(donation: Donation): void {
 
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(10)
-  doc.text('Kevin Muniz Backer Dashboard', 142, 24)
+  doc.text('Hierarchy of visionaries', 148, 24)
   doc.text('Secure payment confirmation', 147, 31)
 
   doc.setDrawColor(185, 206, 255)
@@ -97,7 +97,7 @@ export function downloadReceipt(donation: Donation): void {
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(10)
   doc.text(
-    'Thank you for supporting independent storytelling on Kevin Muniz.',
+    'Thank you for supporting independent storytelling on Hierarchy of visionaries.',
     18,
     264,
   )
