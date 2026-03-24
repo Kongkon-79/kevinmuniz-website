@@ -11,7 +11,7 @@ const Footer = () => {
             <Link href="/" className="flex items-center">
               <Image
                 src="/assets/images/logo.png"
-                alt="Hierarchy of Visionaries"
+                alt="Hierarchy of visionaries"
                 width={1000}
                 height={1000}
                 className="h-[68px] w-auto object-contain md:h-[78px]"
@@ -53,7 +53,7 @@ const Footer = () => {
       </div>
       {/* footer bottom  */}
       <p className="container text-base md:text-lg font-medium text-center text-[#131313] leading-[120%] py-6 md:py-8 ">
-        Copyright © {new Date().getFullYear()}. Hierarchy of Visionaries. All
+        Copyright © {new Date().getFullYear()}. Hierarchy of visionaries. All
         rights reserved.
       </p>
     </div>

@@ -30,7 +30,7 @@ const MobileNavbar = () => {
               <Link href="/" onClick={closeSheet} className="flex items-center">
                 <Image
                   src={"/assets/images/main_logo.png"}
-                  alt="Hierarchy of Visionaries"
+                  alt="Hierarchy of visionaries"
                   width={1000}
                   height={1000}
                   className="h-[44px] w-auto object-contain sm:h-[50px]"

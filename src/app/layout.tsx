@@ -12,7 +12,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "kevinmuniz-website",
+  title: "Hierarchy of visionaries",
   description: "Where Great Stories Find Their Stage",
 };
 

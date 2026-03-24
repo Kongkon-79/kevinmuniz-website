@@ -31,14 +31,15 @@ export default function CampaignCard({ campaign }: CampaignCardProps) {
 
   const handleReadMore = () => {
     const role = session?.user?.role
+    const campaignDetailsPath = `/dashboard/discover/${campaign.id}`
 
     if (status !== 'authenticated' || role !== 'USER') {
       toast.info('Please sign in as a backer to explore featured campaigns.')
-      router.push('/login?callbackUrl=/dashboard/discover')
+      router.push(`/login?callbackUrl=${encodeURIComponent(campaignDetailsPath)}`)
       return
     }
 
-    router.push('/dashboard/discover')
+    router.push(campaignDetailsPath)
   }
 
   return (

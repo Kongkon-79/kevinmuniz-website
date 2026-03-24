@@ -22,7 +22,7 @@ export default function HowItWorksHero() {
           <div className="max-w-3xl py-24 md:py-32">
             <h1 className="mt-6 text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
               Learn How
-              <span className="block ">Hierarchy of Visionaries</span>
+              <span className="block ">Hierarchy of visionaries</span>
               <span className="block ">Works for You</span>
             </h1>
 

@@ -74,7 +74,7 @@ const Navbar = () => {
               <Link href="/" className="flex items-center flex-shrink-0">
                 <Image
                   src="/assets/images/main_logo.png"
-                  alt="Hierarchy of Visionaries"
+                  alt="Hierarchy of visionaries"
                   width={1000}
                   height={1000}
                   className="h-[44px] w-auto object-contain sm:h-[50px] lg:h-[56px]"

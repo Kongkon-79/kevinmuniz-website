@@ -112,7 +112,7 @@ export default function DashboardSidebar() {
           <Link href={dashboardHome} className="inline-flex">
             <Image
               src="/assets/images/logo.png"
-              alt="Hierarchy of Visionaries"
+              alt="Hierarchy of visionaries"
               width={110}
               height={110}
               className="h-[52px] w-auto object-contain"
