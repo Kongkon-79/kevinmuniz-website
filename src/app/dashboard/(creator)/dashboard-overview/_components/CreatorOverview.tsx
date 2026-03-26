@@ -9,8 +9,9 @@ import {
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import { AppPagination } from '@/components/share/AppPagination'
 import { Skeleton } from '@/components/ui/skeleton'
 import { fetchCreatorOverview, fetchCreatorStats } from '../api'
 
@@ -83,6 +84,8 @@ function OverviewSkeleton() {
 export default function CreatorOverview() {
   const { data: session } = useSession()
   const token = session?.user?.accessToken || ''
+  const [campaignsPage, setCampaignsPage] = useState(1)
+  const [donorsPage, setDonorsPage] = useState(1)
 
   const {
     data: stats,
@@ -99,8 +102,8 @@ export default function CreatorOverview() {
     isLoading: isOverviewLoading,
     isError: isOverviewError,
   } = useQuery({
-    queryKey: ['creator-overview'],
-    queryFn: () => fetchCreatorOverview(token),
+    queryKey: ['creator-overview', campaignsPage, donorsPage],
+    queryFn: () => fetchCreatorOverview(token, campaignsPage, donorsPage),
     enabled: !!token,
   })
 
@@ -233,6 +236,17 @@ export default function CreatorOverview() {
                   </div>
                 )}
               </div>
+
+              {overview?.myCampaignsPagination &&
+                overview.myCampaignsPagination.totalData > 10 &&
+                overview.myCampaignsPagination.totalPages > 1 && (
+                  <AppPagination
+                    currentPage={campaignsPage}
+                    totalPages={overview.myCampaignsPagination.totalPages}
+                    totalData={overview.myCampaignsPagination.totalData}
+                    onPageChange={setCampaignsPage}
+                  />
+                )}
             </section>
 
             <section className="rounded-[12px] bg-white p-5 shadow-[0_4px_14px_rgba(17,24,39,0.04)]">
@@ -273,6 +287,17 @@ export default function CreatorOverview() {
                   </div>
                 )}
               </div>
+
+              {overview?.recentDonorsPagination &&
+                overview.recentDonorsPagination.totalData > 10 &&
+                overview.recentDonorsPagination.totalPages > 1 && (
+                  <AppPagination
+                    currentPage={donorsPage}
+                    totalPages={overview.recentDonorsPagination.totalPages}
+                    totalData={overview.recentDonorsPagination.totalData}
+                    onPageChange={setDonorsPage}
+                  />
+                )}
             </section>
           </div>
         </>

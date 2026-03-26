@@ -30,7 +30,17 @@ export interface CreatorStats {
   avgDonation: number;
 }
 
+export interface CreatorOverviewPagination {
+  currentPage: number;
+  totalPages: number;
+  totalData: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
 export interface CreatorOverviewResponse {
   myCampaigns: CreatorCampaign[];
+  myCampaignsPagination: CreatorOverviewPagination;
   recentDonors: RecentDonor[];
+  recentDonorsPagination: CreatorOverviewPagination;
 }

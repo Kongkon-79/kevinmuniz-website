@@ -16,6 +16,18 @@ export interface DiscoverCampaignCreator {
   profileImage?: string
 }
 
+export interface DiscoverCampaignProducer {
+  _id: string
+  firstName: string
+  lastName: string
+  productionCompany: string
+  imdbPageLink: string
+  cv: string
+  status: 'approved'
+  profileImage?: string
+  email?: string
+}
+
 export interface DiscoverCampaign {
   _id: string
   title: string
@@ -28,6 +40,7 @@ export interface DiscoverCampaign {
   activeStatus: string
   totalRaised?: number
   totalDonations?: number
+  isTracked?: boolean
   creatingDate: string
   endDate: string
   createdAt: string
@@ -72,6 +85,8 @@ export interface DiscoverCampaignDetailResponse {
   totalDonations: number
   donors: DiscoverCampaignDonor[]
   donorPagination?: DiscoverCampaignPagination
+  isTracked: boolean
+  producer: DiscoverCampaignProducer | null
 }
 
 export interface CreateDonationSessionResponse {

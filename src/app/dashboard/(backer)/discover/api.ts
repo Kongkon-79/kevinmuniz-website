@@ -136,3 +136,29 @@ export const fetchDonationConfirmation = async (
 
   return response.data.data
 }
+
+export const trackCampaign = async (
+  token: string,
+  campaignId: string,
+): Promise<{ campaignId: string; isTracked: boolean }> => {
+  const response = await axios.post<{
+    data: { campaignId: string; isTracked: boolean }
+  }>(`${API_URL}/campaign-tracking/${campaignId}`, null, {
+    headers: getAuthHeaders(token),
+  })
+
+  return response.data.data
+}
+
+export const untrackCampaign = async (
+  token: string,
+  campaignId: string,
+): Promise<{ campaignId: string; isTracked: boolean }> => {
+  const response = await axios.delete<{
+    data: { campaignId: string; isTracked: boolean }
+  }>(`${API_URL}/campaign-tracking/${campaignId}`, {
+    headers: getAuthHeaders(token),
+  })
+
+  return response.data.data
+}

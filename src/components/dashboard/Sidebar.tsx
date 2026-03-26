@@ -12,6 +12,7 @@ import {
   PlusCircle,
   BarChart,
   Heart,
+  Bookmark,
   Bell,
   Search,
   LogOut,
@@ -56,6 +57,11 @@ export default function DashboardSidebar() {
   const backerLinks = useMemo(
     () => [
       { name: 'Discover', href: '/dashboard/discover', icon: Search },
+      {
+        name: 'Tracked Campaigns',
+        href: '/dashboard/my-tracked-campaigns',
+        icon: Bookmark,
+      },
       { name: 'My Donations', href: '/dashboard/my-donations', icon: Heart },
       { name: 'Notifications', href: '/dashboard/notifications', icon: Bell },
     ],
@@ -100,6 +106,10 @@ export default function DashboardSidebar() {
         pathname === '/donation-success' ||
         pathname === '/donation-failed'
       )
+    }
+
+    if (href === '/dashboard/my-tracked-campaigns') {
+      return pathname === href || pathname.startsWith('/dashboard/my-tracked-campaigns')
     }
 
     return pathname === href

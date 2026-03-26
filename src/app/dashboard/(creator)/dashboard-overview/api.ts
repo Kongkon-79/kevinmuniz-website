@@ -25,11 +25,19 @@ export const fetchCreatorStats = async (
 };
 
 export const fetchCreatorOverview = async (
-  token: string
+  token: string,
+  campaignsPage: number,
+  donorsPage: number
 ): Promise<CreatorOverviewResponse> => {
   const response = await axios.get(
     `${BASE_URL}/campaign-analytics/creator-dashboard/overview`,
     {
+      params: {
+        campaignsPage,
+        campaignsLimit: 10,
+        donorsPage,
+        donorsLimit: 10,
+      },
       headers: getAuthHeaders(token),
     }
   );

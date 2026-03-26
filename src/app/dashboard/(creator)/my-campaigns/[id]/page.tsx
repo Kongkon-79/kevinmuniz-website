@@ -65,15 +65,19 @@ export default function CreatorCampaignDetailPage() {
       toast.success(
         action === 'close'
           ? 'Campaign closed successfully.'
-          : 'Campaign opened successfully.'
+          : 'Campaign opened successfully.',
       )
       setIsStatusModalOpen(false)
-      queryClient.invalidateQueries({ queryKey: ['creator-campaign', params.id] })
+      queryClient.invalidateQueries({
+        queryKey: ['creator-campaign', params.id],
+      })
       queryClient.invalidateQueries({ queryKey: ['my-campaigns'] })
     },
     onError: error => {
       const message =
-        error instanceof Error ? error.message : 'Failed to update campaign status.'
+        error instanceof Error
+          ? error.message
+          : 'Failed to update campaign status.'
       toast.error(message)
     },
   })
@@ -106,7 +110,10 @@ export default function CreatorCampaignDetailPage() {
 
   const { campaign, totalRaised, totalDonations, donors } = data
   const isClosed = campaign.closedStatus === 'closed'
-  const creatorName = [campaign.createdBy?.firstName, campaign.createdBy?.lastName]
+  const creatorName = [
+    campaign.createdBy?.firstName,
+    campaign.createdBy?.lastName,
+  ]
     .filter(Boolean)
     .join(' ')
 
@@ -209,7 +216,7 @@ export default function CreatorCampaignDetailPage() {
         </div>
 
         <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-24">
+          <div className="lg:sticky lg:top-20">
             <div className="overflow-hidden rounded-[28px] border border-[#D9CCFF] bg-white shadow-[0_18px_45px_rgba(46,171,252,0.14)]">
               <div className="h-1.5 w-full bg-gradient-to-r from-[#8C5CFF] to-[#2EABFC]" />
               <div className="space-y-6 bg-[linear-gradient(180deg,rgba(140,92,255,0.08)_0%,rgba(46,171,252,0.03)_38%,#FFFFFF_100%)] p-6 md:p-8">
@@ -291,7 +298,9 @@ export default function CreatorCampaignDetailPage() {
                     type="button"
                     variant="outline"
                     onClick={() =>
-                      router.push(`/dashboard/my-campaigns/${campaign._id}/edit`)
+                      router.push(
+                        `/dashboard/my-campaigns/${campaign._id}/edit`,
+                      )
                     }
                     className="h-14 w-full rounded-full border-[#8C5CFF] font-semibold text-[#8C5CFF] hover:bg-[#F6F0FF]"
                   >
@@ -352,7 +361,10 @@ export default function CreatorCampaignDetailPage() {
               ))}
               {donors.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-24 text-center text-[#5C5C5C]">
+                  <TableCell
+                    colSpan={5}
+                    className="h-24 text-center text-[#5C5C5C]"
+                  >
                     No donations yet.
                   </TableCell>
                 </TableRow>
