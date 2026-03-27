@@ -36,6 +36,8 @@ import {
   untrackCampaign,
 } from '../api'
 import DonateToCampaignModal from '../_components/DonateToCampaignModal'
+import RewardsSection from '../_components/RewardsSection'
+import type { DiscoverCampaignReward } from '../types'
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
@@ -69,6 +71,8 @@ export default function DiscoverCampaignDetailsPage() {
   const token = session?.user?.accessToken || ''
   const queryClient = useQueryClient()
   const [isDonateModalOpen, setIsDonateModalOpen] = useState(false)
+  const [selectedReward, setSelectedReward] =
+    useState<DiscoverCampaignReward | null>(null)
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['discover-campaign', params.id],
@@ -127,7 +131,15 @@ export default function DiscoverCampaignDetailsPage() {
     return null
   }
 
-  const { campaign, totalRaised, totalDonations, donors, producer, isTracked } = data
+  const {
+    campaign,
+    totalRaised,
+    totalDonations,
+    donors,
+    producer,
+    isTracked,
+    rewards,
+  } = data
   const isInactive = campaign.activeStatus === 'inactive'
   const creatorName = [campaign.createdBy.firstName, campaign.createdBy.lastName]
     .filter(Boolean)
@@ -136,6 +148,19 @@ export default function DiscoverCampaignDetailsPage() {
     ? [producer.firstName, producer.lastName].filter(Boolean).join(' ')
     : ''
   const trackButtonLabel = isTracked ? 'Tracked' : 'Track Campaign'
+  const handleChangeReward = () => {
+    const rewardsSection = document.getElementById('campaign-rewards-section')
+    rewardsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+  const handlePrimaryRewardAction = () => {
+    if (!rewards.length) {
+      setSelectedReward(null)
+      setIsDonateModalOpen(true)
+      return
+    }
+
+    handleChangeReward()
+  }
 
   return (
     <div className="mx-auto max-w-full space-y-8 p-4 md:p-8">
@@ -453,13 +478,15 @@ export default function DiscoverCampaignDetailsPage() {
                     <>
                     <Button
                       type="button"
-                      onClick={() => setIsDonateModalOpen(true)}
+                      onClick={handlePrimaryRewardAction}
                       className="h-14 w-full rounded-full bg-gradient-to-r from-[#8C5CFF] to-[#2EABFC] font-semibold text-white hover:from-[#7F51F5] hover:to-[#1EA2F5]"
                     >
-                      Donate to this Campaign
+                      {rewards.length ? 'Choose Your Reward' : 'Donate to this Campaign'}
                     </Button>
                     <p className="text-center text-xs text-[#909090]">
-                      Secure payment via Stripe. All contributions are final.
+                      {rewards.length
+                        ? 'Pick a reward below or continue without one.'
+                        : 'Secure payment via Stripe. All contributions are final.'}
                     </p>
                     </>
                   )}
@@ -475,6 +502,18 @@ export default function DiscoverCampaignDetailsPage() {
           </div>
         </div>
       </div>
+
+      {!isInactive && (
+        <div id="campaign-rewards-section" className="pt-2">
+          <RewardsSection
+            rewards={rewards}
+            onSelectReward={reward => {
+              setSelectedReward(reward)
+              setIsDonateModalOpen(true)
+            }}
+          />
+        </div>
+      )}
 
       {!isInactive && (
         <div className="space-y-6 pt-4">
@@ -543,6 +582,8 @@ export default function DiscoverCampaignDetailsPage() {
         <DonateToCampaignModal
           isOpen={isDonateModalOpen}
           onClose={() => setIsDonateModalOpen(false)}
+          onChangeReward={handleChangeReward}
+          selectedReward={selectedReward}
           campaign={{
             _id: campaign._id,
             title: campaign.title,

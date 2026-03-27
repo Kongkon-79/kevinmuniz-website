@@ -28,6 +28,20 @@ export interface DiscoverCampaignProducer {
   email?: string
 }
 
+export interface DiscoverCampaignReward {
+  _id: string
+  campaignId: string
+  title: string
+  description: string
+  price: number
+  quantity: number | null
+  quantityClaimed: number
+  quantityLeft: number | null
+  estimatedDeliveryDate: string
+  isActive: boolean
+  isAvailable: boolean
+}
+
 export interface DiscoverCampaign {
   _id: string
   title: string
@@ -85,6 +99,7 @@ export interface DiscoverCampaignDetailResponse {
   totalDonations: number
   donors: DiscoverCampaignDonor[]
   donorPagination?: DiscoverCampaignPagination
+  rewards: DiscoverCampaignReward[]
   isTracked: boolean
   producer: DiscoverCampaignProducer | null
 }
@@ -102,6 +117,12 @@ export interface DonationConfirmation {
     stripeSessionId: string
     stripePaymentIntentId: string
     createdAt: string
+    reward: {
+      _id: string
+      title: string
+      price: number
+      estimatedDeliveryDate: string
+    } | null
   }
   campaign: {
     id: string

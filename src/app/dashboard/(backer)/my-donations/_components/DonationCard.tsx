@@ -82,6 +82,17 @@ export default function DonationCard({
             <h3 className="text-[24px] font-medium text-[#2D2D2D]">
               {donation.campaignId.title}
             </h3>
+            <div className="mt-3">
+              {donation.reward ? (
+                <span className="inline-flex rounded-full bg-[#F3EEFF] px-3 py-1 text-xs font-semibold text-[#8C5CFF]">
+                  Reward: {donation.reward.title}
+                </span>
+              ) : (
+                <span className="inline-flex rounded-full bg-[#F3F4F6] px-3 py-1 text-xs font-semibold text-[#6B7280]">
+                  No Reward
+                </span>
+              )}
+            </div>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-[#777777]">
               <span className="inline-flex items-center gap-1">
                 <CalendarDays className="h-3.5 w-3.5" />
@@ -108,6 +119,28 @@ export default function DonationCard({
             <ShieldCheck className="h-4 w-4" />
             Stripe
           </p>
+        </div>
+
+        <div className="my-5 h-px bg-[#EDF2F7]" />
+
+        <div>
+          <p className="text-[20px] font-medium text-[#2D2D2D]">Reward</p>
+          <div className="mt-3">
+            {donation.reward ? (
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="inline-flex rounded-full bg-[#F3EEFF] px-3 py-1 text-xs font-semibold text-[#8C5CFF]">
+                  {donation.reward.title}
+                </span>
+                <span className="text-sm text-[#666666]">
+                  Minimum pledge ${donation.reward.price.toFixed(2)}
+                </span>
+              </div>
+            ) : (
+              <span className="inline-flex rounded-full bg-[#F3F4F6] px-3 py-1 text-xs font-semibold text-[#6B7280]">
+                No Reward
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="my-5 h-px bg-[#EDF2F7]" />
@@ -154,6 +187,11 @@ export default function DonationCard({
             variant="outline"
             onClick={() => downloadReceipt(donation)}
             className="h-[44px] rounded-full border-[#D7DDE5] px-5 text-[#666666] hover:bg-[#F5F7FA]"
+            title={
+              donation.reward
+                ? `Receipt includes reward: ${donation.reward.title}`
+                : 'Receipt includes no-reward status'
+            }
           >
             <Download className="h-4 w-4" />
             Download Receipt

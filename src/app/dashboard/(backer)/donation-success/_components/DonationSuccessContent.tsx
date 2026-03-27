@@ -19,7 +19,10 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { downloadReceipt } from '@/utils/downloadReceipt'
-import { fetchDonationConfirmation } from '@/app/dashboard/(backer)/discover/api'
+import {
+  createDonationReward,
+  fetchDonationConfirmation,
+} from '@/app/dashboard/(backer)/discover/api'
 import type { Donation } from '@/app/dashboard/(backer)/my-donations/types'
 
 const formatDateTime = (value: string) =>
@@ -84,6 +87,26 @@ export default function DonationSuccessContent() {
     enabled: !!sessionId && !!token,
   })
 
+  useEffect(() => {
+    if (!token || !data?.donation?.id) {
+      return
+    }
+
+    const storedDonationId = window.sessionStorage.getItem('last_donation_id')
+    const storedRewardId =
+      window.sessionStorage.getItem('last_selected_reward_id') || ''
+
+    if (storedDonationId !== data.donation.id) {
+      return
+    }
+
+    void createDonationReward(token, data.donation.id, storedRewardId || null)
+      .finally(() => {
+        window.sessionStorage.removeItem('last_donation_id')
+        window.sessionStorage.removeItem('last_selected_reward_id')
+      })
+  }, [data?.donation?.id, token])
+
   if (isLoading) {
     return <DonationSuccessSkeleton />
   }
@@ -126,6 +149,7 @@ export default function DonationSuccessContent() {
     refundReason: null,
     refundRequestedAt: null,
     refundProcessedAt: null,
+    reward: data.donation.reward,
     createdAt: data.donation.createdAt,
     updatedAt: data.donation.createdAt,
   }
@@ -163,6 +187,11 @@ export default function DonationSuccessContent() {
       label: 'Status',
       valueClassName:
         data.donation.paymentStatus === 'paid' ? 'text-[#0E9F6E]' : '',
+    },
+    {
+      icon: Receipt,
+      value: data.donation.reward?.title || 'No Reward',
+      label: 'Reward',
     },
   ]
 

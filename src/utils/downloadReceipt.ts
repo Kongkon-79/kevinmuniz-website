@@ -39,6 +39,9 @@ export function downloadReceipt(donation: Donation): void {
       .filter(Boolean)
       .join(' ')
       .trim() || 'Backer'
+  const rewardLabel = donation.reward
+    ? `${donation.reward.title} (Min $${donation.reward.price.toFixed(2)})`
+    : 'No Reward Selected'
 
   doc.setFillColor(244, 251, 255)
   doc.rect(0, 0, 210, 297, 'F')
@@ -84,14 +87,21 @@ export function downloadReceipt(donation: Donation): void {
   drawLabelValue(doc, 'Payment Method', 'Stripe - Visa ****4242', 187)
   drawLabelValue(
     doc,
+    'Reward',
+    rewardLabel,
+    212,
+    donation.reward ? [140, 92, 255] : [107, 114, 128],
+  )
+  drawLabelValue(
+    doc,
     'Donor',
     donorName,
-    212,
+    237,
   )
-  drawLabelValue(doc, 'Email', donation.donorId.email || 'Not available', 237)
+  drawLabelValue(doc, 'Email', donation.donorId.email || 'Not available', 262)
 
   doc.setDrawColor(215, 232, 255)
-  doc.line(18, 254, 192, 254)
+  doc.line(18, 279, 192, 279)
 
   doc.setTextColor(119, 119, 119)
   doc.setFont('helvetica', 'normal')
@@ -99,12 +109,12 @@ export function downloadReceipt(donation: Donation): void {
   doc.text(
     'Thank you for supporting independent storytelling on Hierarchy of visionaries.',
     18,
-    264,
+    289,
   )
   doc.text(
     `Receipt ID: ${donation._id}`,
     18,
-    271,
+    296,
   )
 
   doc.save(`receipt-${donation._id}.pdf`)

@@ -31,10 +31,13 @@ import {
   type DonationForm,
   type DonationFormInput,
 } from '../schema'
+import type { DiscoverCampaignReward } from '../types'
 
 interface DonateToCampaignModalProps {
   isOpen: boolean
   onClose: () => void
+  onChangeReward: () => void
+  selectedReward: DiscoverCampaignReward | null
   campaign: {
     _id: string
     title: string
@@ -45,6 +48,8 @@ interface DonateToCampaignModalProps {
 export default function DonateToCampaignModal({
   isOpen,
   onClose,
+  onChangeReward,
+  selectedReward,
   campaign,
 }: DonateToCampaignModalProps) {
   const { data: session } = useSession()
@@ -60,8 +65,13 @@ export default function DonateToCampaignModal({
   useEffect(() => {
     if (!isOpen) {
       form.reset({ amount: 1 })
+      return
     }
-  }, [form, isOpen])
+
+    form.reset({
+      amount: selectedReward ? selectedReward.price : ('' as never),
+    })
+  }, [form, isOpen, selectedReward])
 
   const createDonationMutation = useMutation({
     mutationFn: (values: DonationForm) => {
@@ -69,9 +79,19 @@ export default function DonateToCampaignModal({
         throw new Error('Campaign not found')
       }
 
-      return createDonationSession(token, campaign._id, values.amount)
+      return createDonationSession(
+        token,
+        campaign._id,
+        values.amount,
+        selectedReward?._id || null,
+      )
     },
     onSuccess: data => {
+      window.sessionStorage.setItem('last_donation_id', data.donationId)
+      window.sessionStorage.setItem(
+        'last_selected_reward_id',
+        selectedReward?._id || '',
+      )
       window.location.href = data.url
     },
     onError: error => {
@@ -108,6 +128,52 @@ export default function DonateToCampaignModal({
               )}
               className="space-y-5"
             >
+              <div className="rounded-[16px] border border-[#D7E8FF] bg-[#F8FBFF] p-4">
+                {selectedReward ? (
+                  <>
+                    <p className="text-sm font-semibold text-[#1A1A2E]">
+                      Selected reward
+                    </p>
+                    <div className="mt-2 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#2D2D2D]">
+                          {selectedReward.title}
+                        </p>
+                        <p className="text-xs text-[#6B7280]">
+                          Minimum pledge ${selectedReward.price.toFixed(2)}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onClose()
+                          onChangeReward()
+                        }}
+                        className="w-fit text-sm font-medium text-[#2EABFC] underline underline-offset-4"
+                      >
+                        Change reward
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-sm text-[#6B7280]">
+                      Donating without reward
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onClose()
+                        onChangeReward()
+                      }}
+                      className="text-sm font-medium text-[#2EABFC] underline underline-offset-4"
+                    >
+                      Change reward
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <FormField
                 control={form.control}
                 name="amount"

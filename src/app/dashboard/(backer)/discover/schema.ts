@@ -14,7 +14,16 @@ export const produceProjectSchema = z.object({
 export type ProduceProjectForm = z.infer<typeof produceProjectSchema>
 
 export const donationSchema = z.object({
-  amount: z.coerce.number().min(1, 'Minimum donation is $1'),
+  amount: z.preprocess(
+    value => {
+      if (value === '' || value === null || value === undefined) {
+        return undefined
+      }
+
+      return Number(value)
+    },
+    z.number().min(1, 'Minimum donation is $1'),
+  ),
 })
 
 export type DonationForm = z.infer<typeof donationSchema>
