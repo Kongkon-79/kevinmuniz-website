@@ -21,6 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import {
   createDonationSession,
@@ -59,17 +60,19 @@ export default function DonateToCampaignModal({
     resolver: zodResolver(donationSchema),
     defaultValues: {
       amount: 1,
+      isAnonymous: false,
     },
   })
 
   useEffect(() => {
     if (!isOpen) {
-      form.reset({ amount: 1 })
+      form.reset({ amount: 1, isAnonymous: false })
       return
     }
 
     form.reset({
       amount: selectedReward ? selectedReward.price : ('' as never),
+      isAnonymous: false,
     })
   }, [form, isOpen, selectedReward])
 
@@ -84,14 +87,10 @@ export default function DonateToCampaignModal({
         campaign._id,
         values.amount,
         selectedReward?._id || null,
+        values.isAnonymous,
       )
     },
     onSuccess: data => {
-      window.sessionStorage.setItem('last_donation_id', data.donationId)
-      window.sessionStorage.setItem(
-        'last_selected_reward_id',
-        selectedReward?._id || '',
-      )
       window.location.href = data.url
     },
     onError: error => {
@@ -173,6 +172,35 @@ export default function DonateToCampaignModal({
                   </div>
                 )}
               </div>
+
+              <FormField
+                control={form.control}
+                name="isAnonymous"
+                render={({ field }) => (
+                  <FormItem className="rounded-[16px] border border-[#E8EDF3] bg-[#FBFBFB] p-4">
+                    <div className="flex items-start gap-3">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={checked =>
+                            field.onChange(Boolean(checked))
+                          }
+                          className="mt-0.5 border-[#B9CEFF] data-[state=checked]:border-[#2EABFC] data-[state=checked]:bg-[#2EABFC]"
+                        />
+                      </FormControl>
+                      <div className="space-y-1">
+                        <FormLabel className="text-sm font-medium text-[#2D2D2D]">
+                          Donate anonymously
+                        </FormLabel>
+                        <p className="text-xs text-[#6B7280]">
+                          Your details stay hidden from campaign-facing donor lists.
+                        </p>
+                      </div>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <FormField
                 control={form.control}

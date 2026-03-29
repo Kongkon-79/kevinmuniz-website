@@ -113,6 +113,7 @@ export interface DonationConfirmation {
   donation: {
     id: string
     amount: number
+    isAnonymous: boolean
     paymentStatus: string
     stripeSessionId: string
     stripePaymentIntentId: string

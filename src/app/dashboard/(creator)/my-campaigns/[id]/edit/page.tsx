@@ -277,8 +277,10 @@ export default function EditCampaignPage() {
                       <Input
                         {...field}
                         type="number"
+                        disabled
                         className={cn(
                           fieldClassName,
+                          'cursor-not-allowed opacity-70',
                           fieldState.error &&
                             'border-[#EF4444] focus-visible:ring-[#EF4444]',
                         )}
@@ -292,6 +294,9 @@ export default function EditCampaignPage() {
                         }
                       />
                     </FormControl>
+                    <FormDescription className="text-xs text-[#2EABFC]">
+                      Budget and campaign dates are now controlled from the admin panel.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -308,8 +313,10 @@ export default function EditCampaignPage() {
                           <FormControl>
                             <Button
                               variant="outline"
+                              disabled
                               className={cn(
                                 fieldClassName,
+                                'cursor-not-allowed opacity-70',
                                 'justify-between px-4 font-normal',
                                 !field.value && 'text-[#B1B5BD]',
                                 fieldState.error &&
@@ -349,8 +356,10 @@ export default function EditCampaignPage() {
                           <FormControl>
                             <Button
                               variant="outline"
+                              disabled
                               className={cn(
                                 fieldClassName,
+                                'cursor-not-allowed opacity-70',
                                 'justify-between px-4 font-normal',
                                 !field.value && 'text-[#B1B5BD]',
                                 fieldState.error &&
@@ -465,7 +474,7 @@ export default function EditCampaignPage() {
                               Click to Upload photo
                             </p>
                             <p className="mt-1 text-xs text-[#9AA0A6]">
-                              JPG up to 10 MB
+                              JPG, PNG, or WEBP up to 10 MB. Recommended size 1600 x 900 px.
                             </p>
                           </div>
                         )}

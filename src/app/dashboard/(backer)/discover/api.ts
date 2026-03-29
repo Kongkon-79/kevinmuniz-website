@@ -106,6 +106,7 @@ export const createDonationSession = async (
   campaignId: string,
   amount: number,
   rewardId?: string | null,
+  isAnonymous?: boolean,
 ): Promise<CreateDonationSessionResponse> => {
   const response = await axios.post<{ data: CreateDonationSessionResponse }>(
     `${API_URL}/donation/create-donation-session`,
@@ -113,6 +114,7 @@ export const createDonationSession = async (
       campaignId,
       amount,
       rewardId: rewardId || null,
+      isAnonymous: Boolean(isAnonymous),
     },
     {
       headers: getAuthHeaders(token),
@@ -137,23 +139,6 @@ export const fetchDonationConfirmation = async (
   )
 
   return response.data.data
-}
-
-export const createDonationReward = async (
-  token: string,
-  donationId: string,
-  rewardId: string | null,
-): Promise<void> => {
-  await axios.post(
-    `${API_URL}/donation-rewards`,
-    {
-      donationId,
-      rewardId,
-    },
-    {
-      headers: getAuthHeaders(token),
-    },
-  )
 }
 
 export const trackCampaign = async (

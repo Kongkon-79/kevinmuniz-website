@@ -24,6 +24,7 @@ export const donationSchema = z.object({
     },
     z.number().min(1, 'Minimum donation is $1'),
   ),
+  isAnonymous: z.boolean().default(false),
 })
 
 export type DonationForm = z.infer<typeof donationSchema>

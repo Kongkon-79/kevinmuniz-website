@@ -19,10 +19,7 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { downloadReceipt } from '@/utils/downloadReceipt'
-import {
-  createDonationReward,
-  fetchDonationConfirmation,
-} from '@/app/dashboard/(backer)/discover/api'
+import { fetchDonationConfirmation } from '@/app/dashboard/(backer)/discover/api'
 import type { Donation } from '@/app/dashboard/(backer)/my-donations/types'
 
 const formatDateTime = (value: string) =>
@@ -87,26 +84,6 @@ export default function DonationSuccessContent() {
     enabled: !!sessionId && !!token,
   })
 
-  useEffect(() => {
-    if (!token || !data?.donation?.id) {
-      return
-    }
-
-    const storedDonationId = window.sessionStorage.getItem('last_donation_id')
-    const storedRewardId =
-      window.sessionStorage.getItem('last_selected_reward_id') || ''
-
-    if (storedDonationId !== data.donation.id) {
-      return
-    }
-
-    void createDonationReward(token, data.donation.id, storedRewardId || null)
-      .finally(() => {
-        window.sessionStorage.removeItem('last_donation_id')
-        window.sessionStorage.removeItem('last_selected_reward_id')
-      })
-  }, [data?.donation?.id, token])
-
   if (isLoading) {
     return <DonationSuccessSkeleton />
   }
@@ -124,7 +101,10 @@ export default function DonationSuccessContent() {
       ? 'Completed'
       : data.donation.paymentStatus
 
-  const donorNames = data.donor.name.split(' ')
+  const donorDisplayName = data.donation.isAnonymous
+    ? 'Anonymous'
+    : data.donor.name
+  const donorNames = donorDisplayName.split(' ')
   const receiptDonation: Donation = {
     _id: data.donation.id,
     campaignId: {
@@ -136,7 +116,7 @@ export default function DonationSuccessContent() {
     },
     donorId: {
       _id: data.donor.id,
-      firstName: donorNames[0] || data.donor.name,
+      firstName: donorNames[0] || donorDisplayName,
       lastName: donorNames.slice(1).join(' '),
       email: data.donor.email,
       profileImage: '',

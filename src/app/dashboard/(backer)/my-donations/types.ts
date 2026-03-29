@@ -29,6 +29,7 @@ export interface Donation {
   campaignId: DonationCampaign
   donorId: DonationDonor
   amount: number
+  isAnonymous?: boolean
   stripePaymentIntentId: string | null
   stripeSessionId: string
   paymentStatus: PaymentStatus

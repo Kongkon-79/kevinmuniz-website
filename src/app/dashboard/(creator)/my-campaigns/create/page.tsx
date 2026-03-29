@@ -432,7 +432,7 @@ export default function CreateCampaignPage() {
                               Click to Upload photo
                             </p>
                             <p className="mt-1 text-xs text-[#9AA0A6]">
-                              JPG up to 10 MB
+                              JPG, PNG, or WEBP up to 10 MB. Recommended size 1600 x 900 px.
                             </p>
                           </div>
                         )}
