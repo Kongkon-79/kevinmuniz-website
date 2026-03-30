@@ -1,6 +1,6 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   ArrowLeft,
   CheckCircle2,
@@ -62,6 +62,7 @@ export default function DonationSuccessContent() {
   const token = session?.user?.accessToken || ''
   const querySessionId = searchParams.get('session_id') || ''
   const [sessionId, setSessionId] = useState(querySessionId)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     if (querySessionId) {
@@ -83,6 +84,17 @@ export default function DonationSuccessContent() {
     queryFn: () => fetchDonationConfirmation(token, sessionId),
     enabled: !!sessionId && !!token,
   })
+
+  // Invalidate campaign-related caches so snapshot data refreshes after donation
+  useEffect(() => {
+    if (data) {
+      queryClient.invalidateQueries({ queryKey: ['discover-campaign'] })
+      queryClient.invalidateQueries({ queryKey: ['creator-campaign'] })
+      queryClient.invalidateQueries({ queryKey: ['discover-campaigns'] })
+      queryClient.invalidateQueries({ queryKey: ['tracked-campaigns'] })
+      queryClient.invalidateQueries({ queryKey: ['my-campaigns'] })
+    }
+  }, [data, queryClient])
 
   if (isLoading) {
     return <DonationSuccessSkeleton />
@@ -209,9 +221,8 @@ export default function DonationSuccessContent() {
               <item.icon className="mt-1 h-5 w-5 text-[#4B5563]" />
               <div className="min-w-0">
                 <p
-                  className={`break-words text-[18px] font-medium leading-[1.3] text-[#2D2D2D] md:text-[22px] ${item.valueClassName || ''} ${
-                    item.compact ? 'text-[16px] md:text-[18px]' : ''
-                  }`}
+                  className={`break-words text-[18px] font-medium leading-[1.3] text-[#2D2D2D] md:text-[22px] ${item.valueClassName || ''} ${item.compact ? 'text-[16px] md:text-[18px]' : ''
+                    }`}
                   title={item.value}
                 >
                   {item.compact ? truncateValue(item.value, 42) : item.value}

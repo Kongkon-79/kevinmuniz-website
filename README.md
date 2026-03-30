@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hierarchy of Visionaries — Website
+
+> Where Great Stories Find Their Stage
+
+A crowdfunding platform built with **Next.js 14** (App Router) that lets creators launch campaigns and backers discover & donate to projects they believe in. Includes a full user dashboard with role-based views (Creator / Backer), real-time notifications, Stripe-powered donations, and rich campaign management.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| UI Library | React 18 |
+| Styling | Tailwind CSS 3 + tailwind-merge + tailwindcss-animate |
+| Component Library | shadcn/ui (Radix primitives) |
+| Authentication | NextAuth.js v4 (credentials provider) |
+| State Management | Zustand |
+| Data Fetching | TanStack React Query v5 |
+| Tables | TanStack React Table v8 |
+| Forms | React Hook Form + Zod validation |
+| Rich Text Editor | Tiptap |
+| HTTP Client | Axios |
+| Charts | Recharts |
+| Animations | Motion (Framer Motion) |
+| Icons | Lucide React |
+| Date Utilities | date-fns |
+| Carousel | Embla Carousel |
+| PDF Generation | jsPDF |
+| Real-time | Socket.io Client |
+| Notifications/Toasts | Sonner |
+| Font | Manrope (Google Fonts via next/font) |
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Production build
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+```
+src/
+├── app/
+│   ├── (auth)/              # Login, register, forgot-password flows
+│   ├── (website)/           # Public pages (home, campaigns, about, etc.)
+│   ├── api/                 # NextAuth API route
+│   ├── dashboard/
+│   │   ├── (backer)/        # Backer-specific pages (discover, my-donations, etc.)
+│   │   ├── (creator)/       # Creator-specific pages (my-campaigns, analytics)
+│   │   └── (shared)/        # Shared pages (overview, settings, notifications)
+│   ├── donation-success/    # Post-payment success page
+│   └── donation-failed/     # Post-payment failure page
+├── components/
+│   ├── ui/                  # shadcn/ui components (26 components)
+│   ├── shared/              # Shared components (Navbar, Footer, etc.)
+│   ├── dashboard/           # Dashboard layout components (Sidebar)
+│   ├── modals/              # Modal components
+│   ├── providers/           # AuthProvider, AppProvider, NotificationProvider
+│   └── utils/               # Utility components
+└── lib/                     # Utility functions
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+NEXT_PUBLIC_API_URL=         # Backend API base URL
+NEXTAUTH_SECRET=             # NextAuth secret key
+NEXTAUTH_URL=                # App URL for NextAuth
+NEXT_PUBLIC_STRIPE_KEY=      # Stripe publishable key
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command | Description |
+|---|---|
+| `npm run dev` | Start development server |
+| `npm run build` | Create production build |
+| `npm start` | Start production server |
+| `npm run lint` | Run ESLint |

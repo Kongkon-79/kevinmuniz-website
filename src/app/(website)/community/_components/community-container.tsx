@@ -11,7 +11,7 @@ const leftCards = [
   },
   {
     title: "Learn",
-    heading: "Receive guidance from experienced professionals",
+    heading: "Educate yourself",
     description:
       "Discover endless opportunities to explore various facets of the industry.",
   },
@@ -20,9 +20,9 @@ const leftCards = [
 const rightCards = [
   {
     title: "Mentor",
-    heading: "Educate yourself",
+    heading: "Guide fellow professionals",
     description:
-      "Receive guidance from experienced professionals! Give advice to other professionals who are eager to learn more about your field of expertise.",
+      "Provide guidance to fellow members seeking assistance.",
   },
   {
     title: "Succeed",

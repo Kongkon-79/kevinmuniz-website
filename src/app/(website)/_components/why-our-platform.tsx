@@ -6,7 +6,7 @@ const features = [
     icon: Clapperboard,
     title: "Powerful Story Showcases",
     description:
-      "Writers present their scripts, vision, mood boards, and production plans in a professional campaign format designed to attract serious industry backers.",
+      "Writers present their original IPs, creative vision, mood boards, and comprehensive production plans within a professionally structured campaign format aimed at engaging and securing serious industry professionals.",
   },
   {
     icon: Handshake,
@@ -18,7 +18,7 @@ const features = [
     icon: Lock,
     title: "Transparent Collaboration",
     description:
-      "Clear roles, expectations, and project updates ensure everyone involved understands the roadmap from script to screen.",
+      "Clear roles, expectations, and project updates ensure everyone involved understands the roadmap to put the story on screen.",
   },
 ];
 

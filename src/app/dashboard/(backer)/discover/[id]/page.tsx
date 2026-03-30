@@ -11,6 +11,7 @@ import {
   Heart,
   Mail,
   MapPin,
+  Target,
   Users,
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
@@ -176,13 +177,13 @@ export default function DiscoverCampaignDetailsPage() {
       <div className="grid gap-8 lg:grid-cols-12">
         <div className="space-y-8 lg:col-span-8">
           <section className="space-y-6">
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[24px]">
+            <div className="flex min-h-[350px] max-h-[500px] w-full items-center justify-center overflow-hidden rounded-[24px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e]">
               <Image
                 src={campaign.image || '/assets/images/autoLogo.png'}
                 alt={campaign.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 66vw"
-                className="object-cover"
+                width={800}
+                height={600}
+                className="max-h-[480px] w-auto max-w-full object-contain rounded-[12px]"
                 priority
               />
             </div>
@@ -376,9 +377,16 @@ export default function DiscoverCampaignDetailsPage() {
                       </p>
                     </>
                   ) : (
-                    <h2 className="text-[30px] font-bold text-[#0BB05F]">
-                      ${totalRaised.toLocaleString()} Raised
-                    </h2>
+                    <>
+                      <h2 className="text-[30px] font-bold text-[#0BB05F]">
+                        ${totalRaised.toLocaleString()} Raised
+                      </h2>
+                      {campaign.proposedFunding != null && campaign.proposedFunding > 0 && (
+                        <p className="text-sm font-medium text-[#777777]">
+                          Goal: ${campaign.proposedFunding.toLocaleString()}
+                        </p>
+                      )}
+                    </>
                   )}
                 </div>
 
@@ -393,6 +401,20 @@ export default function DiscoverCampaignDetailsPage() {
                           {totalDonations}
                         </p>
                         <p className="text-sm text-[#909090]">Backers</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {!isInactive && campaign.proposedFunding != null && campaign.proposedFunding > 0 && (
+                    <div className="flex items-start gap-4 rounded-[20px] border border-[#EFEAFE] bg-white/80 p-4">
+                      <div className="mt-1 rounded-full bg-[#F3EEFF] p-2 text-[#8C5CFF]">
+                        <Target className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-lg font-bold text-[#111827]">
+                          ${campaign.proposedFunding.toLocaleString()}
+                        </p>
+                        <p className="text-sm text-[#909090]">Funding Goal</p>
                       </div>
                     </div>
                   )}
@@ -432,7 +454,7 @@ export default function DiscoverCampaignDetailsPage() {
                         <p className="text-lg font-bold text-[#111827]">
                           ${campaign.proposedFunding?.toLocaleString() ?? 0}
                         </p>
-                        <p className="text-sm text-[#909090]">Proposed Funding</p>
+                        <p className="text-sm text-[#909090]">Estimated Budget Amount</p>
                       </div>
                     </div>
                   )}
@@ -445,8 +467,8 @@ export default function DiscoverCampaignDetailsPage() {
                       <p className="text-lg font-bold text-[#111827]">
                         {isInactive
                           ? `${formatDateOnly(campaign.creatingDate)} - ${formatDateOnly(
-                              campaign.endDate,
-                            )}`
+                            campaign.endDate,
+                          )}`
                           : formatDate(campaign.endDate)}
                       </p>
                       <p className="text-sm text-[#909090]">
@@ -462,11 +484,10 @@ export default function DiscoverCampaignDetailsPage() {
                     variant="outline"
                     onClick={() => trackingMutation.mutate()}
                     disabled={trackingMutation.isPending}
-                    className={`h-12 w-full rounded-full border font-semibold transition-colors ${
-                      isTracked
-                        ? 'border-[#79D89B] bg-[#ECFDF3] text-[#0E9F6E] hover:bg-[#E6F8EF]'
-                        : 'border-[#D7E8FF] bg-white text-[#2EABFC] hover:bg-[#F3FAFF]'
-                    }`}
+                    className={`h-12 w-full rounded-full border font-semibold transition-colors ${isTracked
+                      ? 'border-[#79D89B] bg-[#ECFDF3] text-[#0E9F6E] hover:bg-[#E6F8EF]'
+                      : 'border-[#D7E8FF] bg-white text-[#2EABFC] hover:bg-[#F3FAFF]'
+                      }`}
                   >
                     <Heart
                       className={`h-4 w-4 ${isTracked ? 'fill-current' : ''}`}
@@ -476,18 +497,18 @@ export default function DiscoverCampaignDetailsPage() {
 
                   {!isInactive && (
                     <>
-                    <Button
-                      type="button"
-                      onClick={handlePrimaryRewardAction}
-                      className="h-14 w-full rounded-full bg-gradient-to-r from-[#8C5CFF] to-[#2EABFC] font-semibold text-white hover:from-[#7F51F5] hover:to-[#1EA2F5]"
-                    >
-                      {rewards.length ? 'Choose Your Reward' : 'Donate to this Campaign'}
-                    </Button>
-                    <p className="text-center text-xs text-[#909090]">
-                      {rewards.length
-                        ? 'Pick a reward below or continue without one.'
-                        : 'Secure payment via Stripe. All contributions are final.'}
-                    </p>
+                      <Button
+                        type="button"
+                        onClick={handlePrimaryRewardAction}
+                        className="h-14 w-full rounded-full bg-gradient-to-r from-[#8C5CFF] to-[#2EABFC] font-semibold text-white hover:from-[#7F51F5] hover:to-[#1EA2F5]"
+                      >
+                        {rewards.length ? 'Choose Your Reward' : 'Donate to this Campaign'}
+                      </Button>
+                      <p className="text-center text-xs text-[#909090]">
+                        {rewards.length
+                          ? 'Pick a reward below or continue without one.'
+                          : 'Secure payment via Stripe. All contributions are final.'}
+                      </p>
                     </>
                   )}
 

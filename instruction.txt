@@ -1,0 +1,218 @@
+================================================================================
+  KEVINMUNIZ WEBSITE — BOILERPLATE SETUP INSTRUCTIONS
+================================================================================
+
+This file documents every technology, library, and configuration used in this
+project so it can be reproduced as an automated boilerplate template.
+
+
+================================================================================
+ 1. PROJECT INITIALIZATION
+================================================================================
+
+  Framework  : Next.js 14 (App Router)
+  Language   : TypeScript
+  Command    : npx create-next-app@14 ./ --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --no-turbo
+  Node       : >= 18
+  Font       : Manrope (Google Fonts, loaded via next/font)
+
+
+================================================================================
+ 2. CORE DEPENDENCIES  (npm install)
+================================================================================
+
+  react@^18
+  react-dom@^18
+  next@14.2.33
+  typescript@^5
+
+
+================================================================================
+ 3. STYLING
+================================================================================
+
+  tailwindcss@^3.4.1
+  tailwind-merge@^3.4.0           — merge Tailwind classes without conflicts
+  tailwindcss-animate@^1.0.7      — animation utilities for Tailwind
+  postcss@^8                      — required by Tailwind
+  class-variance-authority@^0.7.1 — variant-based component styling (used by shadcn/ui)
+  clsx@^2.1.1                     — conditional classname utility
+
+
+================================================================================
+ 4. COMPONENT LIBRARY — shadcn/ui
+================================================================================
+
+  Initialise : npx shadcn@latest init
+  Base       : Radix UI primitives
+
+  Installed shadcn/ui components (26):
+    accordion, badge, button, calendar, card, carousel, chart, checkbox,
+    dialog, dropdown-menu, form, input, label, pagination, popover,
+    radio-group, scroll-area, select, sheet, skeleton, sonner, table, textarea
+
+  Custom UI components:
+    claude-pagination, social-share-content, text-animate
+
+  Radix packages installed:
+    @radix-ui/react-accordion
+    @radix-ui/react-checkbox
+    @radix-ui/react-dialog
+    @radix-ui/react-dropdown-menu
+    @radix-ui/react-label
+    @radix-ui/react-popover
+    @radix-ui/react-radio-group
+    @radix-ui/react-scroll-area
+    @radix-ui/react-select
+    @radix-ui/react-slot
+
+
+================================================================================
+ 5. AUTHENTICATION
+================================================================================
+
+  next-auth@^4.24.13   — NextAuth.js v4 (credentials provider)
+
+  Setup:
+    - API route: src/app/api/auth/[...nextauth]/route.ts
+    - AuthProvider wraps app in layout.tsx
+    - Middleware protects /dashboard routes
+
+
+================================================================================
+ 6. STATE MANAGEMENT
+================================================================================
+
+  zustand@^5.0.10       — lightweight global state
+
+
+================================================================================
+ 7. DATA FETCHING & SERVER STATE
+================================================================================
+
+  @tanstack/react-query@^5.90.12  — server-state caching, mutations, infinite queries
+  axios@^1.13.6                   — HTTP client for API calls
+
+  Setup:
+    - QueryClientProvider via AppProvider (src/components/providers/AppProvider.tsx)
+
+
+================================================================================
+ 8. TABLES
+================================================================================
+
+  @tanstack/react-table@^8.21.3   — headless table logic
+
+
+================================================================================
+ 9. FORMS & VALIDATION
+================================================================================
+
+  react-hook-form@^7.68.0         — performant form management
+  @hookform/resolvers@^5.2.2      — resolver adapters (Zod)
+  zod@^4.1.13                     — schema validation
+
+
+================================================================================
+ 10. RICH TEXT EDITOR
+================================================================================
+
+  @tiptap/react@^3.20.1           — React binding for Tiptap
+  @tiptap/starter-kit@^3.20.1     — basic editor extensions (bold, italic, etc.)
+
+
+================================================================================
+ 11. ICONS
+================================================================================
+
+  lucide-react@^0.556.0           — icon library
+
+
+================================================================================
+ 12. NOTIFICATIONS / TOASTS
+================================================================================
+
+  sonner@^2.0.7                   — toast notifications
+
+
+================================================================================
+ 13. DATE UTILITIES
+================================================================================
+
+  date-fns@^4.1.0                 — date formatting and manipulation
+  react-day-picker@^9.12.0        — calendar date picker (used by shadcn Calendar)
+
+
+================================================================================
+ 14. ANIMATIONS
+================================================================================
+
+  motion@^12.23.26                — animation library (Framer Motion successor)
+
+
+================================================================================
+ 15. DEV DEPENDENCIES
+================================================================================
+
+  @types/node@^20
+  @types/react@^18
+  @types/react-dom@^18
+  eslint@^8
+  eslint-config-next@14.2.33
+
+
+================================================================================
+ 16. ENVIRONMENT VARIABLES
+================================================================================
+
+  NEXT_PUBLIC_API_URL=             # Backend API base URL
+  NEXTAUTH_SECRET=                 # NextAuth secret key
+  NEXTAUTH_URL=                    # App URL (e.g. http://localhost:3000)
+
+
+================================================================================
+ 17. PROJECT STRUCTURE
+================================================================================
+
+  src/
+  ├── app/
+  │   ├── (auth)/                  # Auth pages — login, register, forgot-password
+  │   ├── (website)/               # Public pages — home, campaigns, about, contact
+  │   ├── api/auth/[...nextauth]/  # NextAuth API route
+  │   ├── dashboard/
+  │   │   ├── (backer)/            # Backer dashboard
+  │   │   ├── (creator)/           # Creator dashboard
+  │   │   └── (shared)/            # Shared dashboard — overview, settings, notifications
+  ├── components/
+  │   ├── ui/                      # shadcn/ui components
+  │   ├── shared/                  # Navbar, Footer, etc.
+  │   ├── dashboard/               # Sidebar
+  │   ├── modals/                  # Modal components
+  │   ├── providers/               # AuthProvider, AppProvider
+  │   └── utils/                   # Utility components
+  ├── lib/                         # utils.ts (cn helper, etc.)
+  └── middleware.ts                # Auth route protection
+
+
+================================================================================
+ 18. QUICK SETUP COMMANDS (to reproduce from scratch)
+================================================================================
+
+  # 1. Create Next.js project
+  npx create-next-app@14 ./ --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"
+
+  # 2. Install shadcn/ui
+  npx shadcn@latest init
+
+  # 3. Add shadcn components
+  npx shadcn@latest add accordion badge button calendar card carousel chart checkbox dialog dropdown-menu form input label pagination popover radio-group scroll-area select sheet skeleton sonner table textarea
+
+  # 4. Install all dependencies
+  npm install next-auth@^4 @tanstack/react-query @tanstack/react-table zustand axios react-hook-form @hookform/resolvers zod @tiptap/react @tiptap/starter-kit lucide-react motion date-fns react-day-picker sonner tailwind-merge tailwindcss-animate class-variance-authority clsx
+
+  # 5. Create src structure
+  mkdir -p src/app/{(auth),(website),api/auth,dashboard/{(backer),(creator),(shared)}}
+  mkdir -p src/components/{ui,shared,dashboard,modals,providers,utils}
+  mkdir -p src/lib
+
+================================================================================

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, Calendar, Clock, MapPin, Users } from 'lucide-react'
+import { ArrowLeft, Calendar, Clock, MapPin, Target, Users } from 'lucide-react'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
@@ -131,13 +131,13 @@ export default function CreatorCampaignDetailPage() {
       <div className="grid gap-8 lg:grid-cols-12">
         <div className="space-y-8 lg:col-span-8">
           <section className="space-y-6">
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[24px]">
+            <div className="flex min-h-[350px] max-h-[500px] w-full items-center justify-center overflow-hidden rounded-[24px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e]">
               <Image
                 src={campaign.image || '/assets/images/autoLogo.png'}
                 alt={campaign.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 66vw"
-                className="object-cover"
+                width={800}
+                height={600}
+                className="max-h-[480px] w-auto max-w-full object-contain rounded-[12px]"
                 priority
               />
             </div>
@@ -241,6 +241,20 @@ export default function CreatorCampaignDetailPage() {
                       <p className="text-sm text-[#909090]">Backers</p>
                     </div>
                   </div>
+
+                  {campaign.proposedFunding != null && campaign.proposedFunding > 0 && (
+                    <div className="flex items-start gap-4 rounded-[20px] border border-[#EFEAFE] bg-white/80 p-4">
+                      <div className="mt-1 rounded-full bg-[#F3EEFF] p-2 text-[#8C5CFF]">
+                        <Target className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-lg font-bold text-[#111827]">
+                          ${campaign.proposedFunding.toLocaleString()}
+                        </p>
+                        <p className="text-sm text-[#909090]">Funding Goal</p>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="flex items-start gap-4 rounded-[20px] border border-[#DBEEFF] bg-white/80 p-4">
                     <div className="mt-1 rounded-full bg-[#EAF6FF] p-2 text-[#2EABFC]">

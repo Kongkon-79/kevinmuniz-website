@@ -4,21 +4,21 @@ export default function StepsForFilmIndustryProfessionals() {
   const steps = [
     {
       id: "01",
-      title: "Create An Account",
+      title: "Create an Account",
       description:
-        "If you are the author of a published book or any other form of intellectual property, you're in the right place. To get started, simply create a new book entry by providing the title of your story along with a brief description.",
+        "Kindly share your background and your professional role in the industry.",
     },
     {
       id: "02",
-      title: "Publish your story",
+      title: "Discover the Story You Like",
       description:
-        "Showcase your story on our platform and connect with fellow authors and industry professionals who have the resources to help bring your film to life.",
+        "Explore a wide variety of IP genres and seize the opportunity to support the stories that resonate with you.",
     },
     {
       id: "03",
-      title: "Promote and network",
+      title: "Donate to Your Preferred IP",
       description:
-        "Leverage our specialized services while presenting your story to a distinctive and engaged audience.",
+        "Invest in the stories you believe have the potential to succeed.",
     },
   ];
 
@@ -31,7 +31,7 @@ export default function StepsForFilmIndustryProfessionals() {
             Steps For Film Industry Professionals
           </h2>
           <p className="mt-3 text-base md:text-lg font-medium leading-normal text-[#8B8B8B] text-center">
-            Learn how to get your book adapted in a few easy steps
+            Explore compelling stories and support their adaptation into film through your support.
           </p>
         </div>
 

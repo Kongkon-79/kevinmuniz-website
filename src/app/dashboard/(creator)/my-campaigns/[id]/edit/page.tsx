@@ -183,7 +183,7 @@ export default function EditCampaignPage() {
                         className={cn(
                           fieldClassName,
                           fieldState.error &&
-                            'border-[#EF4444] focus-visible:ring-[#EF4444]',
+                          'border-[#EF4444] focus-visible:ring-[#EF4444]',
                         )}
                       />
                     </FormControl>
@@ -203,7 +203,7 @@ export default function EditCampaignPage() {
                         className={cn(
                           fieldClassName,
                           fieldState.error &&
-                            'border-[#EF4444] focus-visible:ring-[#EF4444]',
+                          'border-[#EF4444] focus-visible:ring-[#EF4444]',
                         )}
                       />
                     </FormControl>
@@ -229,7 +229,7 @@ export default function EditCampaignPage() {
                           className={cn(
                             fieldClassName,
                             fieldState.error &&
-                              'border-[#EF4444] focus:ring-[#EF4444]',
+                            'border-[#EF4444] focus:ring-[#EF4444]',
                           )}
                         >
                           <SelectValue placeholder="Select category" />
@@ -259,7 +259,7 @@ export default function EditCampaignPage() {
                         className={cn(
                           fieldClassName,
                           fieldState.error &&
-                            'border-[#EF4444] focus-visible:ring-[#EF4444]',
+                          'border-[#EF4444] focus-visible:ring-[#EF4444]',
                         )}
                       />
                     </FormControl>
@@ -272,7 +272,7 @@ export default function EditCampaignPage() {
                 name="proposedFunding"
                 render={({ field, fieldState }) => (
                   <FormItem>
-                    <FormLabel>Proposed Funding</FormLabel>
+                    <FormLabel>Estimated Budget Amount</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -282,7 +282,7 @@ export default function EditCampaignPage() {
                           fieldClassName,
                           'cursor-not-allowed opacity-70',
                           fieldState.error &&
-                            'border-[#EF4444] focus-visible:ring-[#EF4444]',
+                          'border-[#EF4444] focus-visible:ring-[#EF4444]',
                         )}
                         value={field.value ?? ''}
                         onChange={event =>
@@ -320,7 +320,7 @@ export default function EditCampaignPage() {
                                 'justify-between px-4 font-normal',
                                 !field.value && 'text-[#B1B5BD]',
                                 fieldState.error &&
-                                  'border-[#EF4444] text-[#EF4444] focus:ring-[#EF4444]',
+                                'border-[#EF4444] text-[#EF4444] focus:ring-[#EF4444]',
                               )}
                             >
                               {field.value
@@ -363,7 +363,7 @@ export default function EditCampaignPage() {
                                 'justify-between px-4 font-normal',
                                 !field.value && 'text-[#B1B5BD]',
                                 fieldState.error &&
-                                  'border-[#EF4444] text-[#EF4444] focus:ring-[#EF4444]',
+                                'border-[#EF4444] text-[#EF4444] focus:ring-[#EF4444]',
                               )}
                             >
                               {field.value
@@ -458,13 +458,13 @@ export default function EditCampaignPage() {
                         )}
                       >
                         {imagePreview ? (
-                          <div className="relative h-[260px] w-full overflow-hidden rounded-[12px]">
+                          <div className="relative h-[400px] w-full overflow-hidden rounded-[12px] bg-[#F5F5F5]">
                             <Image
                               src={imagePreview}
                               alt="Campaign preview"
                               fill
                               sizes="100vw"
-                              className="object-cover"
+                              className="object-contain"
                             />
                           </div>
                         ) : (

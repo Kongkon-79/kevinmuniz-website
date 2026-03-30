@@ -165,7 +165,7 @@ export default function MyTrackedCampaignsPage() {
                               <ShieldCheck className="h-4 w-4 text-[#0E9F6E]" />
                               {campaign.activeStatus === 'active'
                                 ? `$${campaign.totalRaised?.toLocaleString() ?? 0} raised`
-                                : `$${campaign.proposedFunding?.toLocaleString() ?? 0} proposed`}
+                                : `$${campaign.proposedFunding?.toLocaleString() ?? 0} est. budget`}
                             </span>
                             <span>
                               Creator: {creatorName || 'Campaign Creator'}

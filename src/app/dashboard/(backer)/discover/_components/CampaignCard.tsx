@@ -77,7 +77,7 @@ export default function CampaignCard({
               <div className="flex items-center gap-2">
                 <Wallet className="h-3.5 w-3.5 text-[#8C5CFF]" />
                 <span>
-                  ${campaign.proposedFunding?.toLocaleString() ?? 0} proposed
+                  ${campaign.proposedFunding?.toLocaleString() ?? 0} est. budget
                 </span>
               </div>
               <div className="flex items-center gap-2">

@@ -9,11 +9,11 @@ const AboutOurPlatform = () => {
         </h2>
         <p className="text-base md:text-lg text-[#131313] font-normal leading-normal text-center">
           We built this platform to bridge the gap between powerful storytelling
-          and the people who can bring those stories to life.Too many great
-          scripts never reach production. Our mission is to give writers
-          visibility and give producers, cast, and investors a structured way to
-          discover and support promising film projects.This is where
-          collaboration begins — and cinema is created.
+          and the people who can bring those stories to life. Too many great
+          original IPs never reach production. Our mission is to give writers
+          visibility and provide producers, cast, and investors with a structured
+          way to discover and support promising film projects. This is where
+          collaboration begins—and cinema is created.
         </p>
       </div>
     </div>
