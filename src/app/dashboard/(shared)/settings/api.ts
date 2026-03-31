@@ -65,6 +65,21 @@ export const uploadAvatar = async (token: string, file: File) => {
   return response.data;
 };
 
+export const uploadCV = async (token: string, file: File) => {
+  const formData = new FormData();
+  formData.append("userPDF", file);
+
+  const response = await axios.post(
+    `${API_URL}/user/upload-file`,
+    formData,
+    {
+      headers: getAuthHeaders(token),
+    },
+  );
+
+  return response.data;
+};
+
 export const changePassword = async (
   token: string,
   payload: ChangePasswordPayload,

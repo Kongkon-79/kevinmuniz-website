@@ -18,6 +18,10 @@ export interface UserProfile {
   role: string;
   profileImage: string;
   bio: string;
+  jobRole?: string;
+  imdbLink?: string;
+  cv?: string;
+  isLive?: boolean;
   language: string;
   isVerified: boolean;
   hasActiveSubscription: boolean;
@@ -37,6 +41,10 @@ export interface UpdateProfilePayload {
   phoneNumber?: string;
   gender?: string;
   bio?: string;
+  jobRole?: string;
+  imdbLink?: string;
+  cv?: string;
+  isLive?: boolean;
   dob?: string | null;
   address?: Partial<UserAddress>;
 }

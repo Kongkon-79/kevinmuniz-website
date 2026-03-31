@@ -1,6 +1,6 @@
 "use client";
 
-import { Camera, LoaderCircle } from "lucide-react";
+import { Camera, LoaderCircle, Info } from "lucide-react";
 import Image from "next/image";
 import { RefObject } from "react";
 import { UseFormReturn } from "react-hook-form";
@@ -16,10 +16,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 import type { ProfileFormValues } from "../schema";
 import type { UserProfile } from "../types";
 import ChangePasswordDialog from "./ChangePasswordDialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface ProfileDetailsFormProps {
   profile: UserProfile | undefined;
@@ -30,10 +39,14 @@ interface ProfileDetailsFormProps {
   isPasswordDialogOpen: boolean;
   isChangingPassword: boolean;
   fileInputRef: RefObject<HTMLInputElement>;
+  cvInputRef: RefObject<HTMLInputElement>;
+  isUploadingCV: boolean;
   onEditToggle: () => void;
   onSubmit: (values: ProfileFormValues) => void;
   onAvatarClick: () => void;
   onAvatarChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onCVClick: () => void;
+  onCVChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPasswordDialogOpenChange: (open: boolean) => void;
   onPasswordSubmit: (values: import("../schema").ChangePasswordFormValues) => void;
   passwordForm: UseFormReturn<import("../schema").ChangePasswordFormValues>;
@@ -51,10 +64,14 @@ export default function ProfileDetailsForm({
   isPasswordDialogOpen,
   isChangingPassword,
   fileInputRef,
+  cvInputRef,
+  isUploadingCV,
   onEditToggle,
   onSubmit,
   onAvatarClick,
   onAvatarChange,
+  onCVClick,
+  onCVChange,
   onPasswordDialogOpenChange,
   onPasswordSubmit,
   passwordForm,
@@ -278,6 +295,137 @@ export default function ProfileDetailsForm({
                     />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="jobRole"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[16px] font-medium text-[#999999]">
+                    Job Role
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      readOnly={!isEditing}
+                      className={fieldClassName}
+                      placeholder="e.g. Writer, Producer, Director"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="imdbLink"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[16px] font-medium text-[#999999]">
+                    IMDb Link (Optional)
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      readOnly={!isEditing}
+                      className={fieldClassName}
+                      placeholder="https://imdb.com/name/..."
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="cv"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[16px] font-medium text-[#999999]">
+                    CV Document (PDF)
+                  </FormLabel>
+                  <div className="flex items-center gap-3">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        readOnly
+                        className={fieldClassName}
+                        value={
+                          isUploadingCV
+                            ? "Uploading..."
+                            : (field.value ? field.value.split('/').pop() : '')
+                        }
+                        placeholder="No file uploaded"
+                      />
+                    </FormControl>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={!isEditing || isUploadingCV}
+                      onClick={onCVClick}
+                      className="h-[52px]"
+                    >
+                      {isUploadingCV ? <LoaderCircle className="h-5 w-5 animate-spin" /> : "Upload"}
+                    </Button>
+                    <input
+                      ref={cvInputRef}
+                      type="file"
+                      accept=".pdf"
+                      className="hidden"
+                      onChange={onCVChange}
+                    />
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="isLive"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border border-[#F0F0F0] p-4 shadow-sm mt-8 h-[52px]">
+                  <div className="flex items-center gap-2">
+                    <FormLabel className="text-[16px] font-medium text-[#1E1E1E]">
+                      Community Visibility
+                    </FormLabel>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <button type="button" className="text-gray-400 hover:text-gray-600">
+                          <Info className="h-4 w-4" />
+                          <span className="sr-only">How it works?</span>
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md bg-white">
+                        <DialogHeader>
+                          <DialogTitle>Community Visibility</DialogTitle>
+                          <DialogDescription className="pt-2 text-[15px] leading-relaxed text-[#5C5C5C]">
+                            When this is <strong>enabled</strong>, your professional profile (Name, Job Role, IMDb link, and CV) will be visible to other members on the <strong>Community page</strong>.
+                            <br /><br />
+                            This helps industry professionals, producers, and fellow writers discover your work and connect with you for potential collaborations.
+                            <br /><br />
+                            If <strong>disabled</strong>, your profile will remain private and won&apos;t appear in the community listings.
+                          </DialogDescription>
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      disabled={!isEditing}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />

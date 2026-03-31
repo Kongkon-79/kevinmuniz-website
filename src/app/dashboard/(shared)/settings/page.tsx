@@ -14,6 +14,7 @@ import {
   getUserName,
   updateProfile,
   uploadAvatar,
+  uploadCV,
 } from './api'
 import type { ChangePasswordFormValues, ProfileFormValues } from './schema'
 import { changePasswordSchema, profileFormSchema } from './schema'
@@ -26,6 +27,7 @@ export default function SettingsPage() {
   const token = session?.user?.accessToken
   const queryClient = useQueryClient()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const cvInputRef = useRef<HTMLInputElement>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false)
 
@@ -41,6 +43,10 @@ export default function SettingsPage() {
       phoneNumber: profile?.phoneNumber || '',
       gender: profile?.gender || '',
       bio: profile?.bio || '',
+      jobRole: profile?.jobRole || '',
+      imdbLink: profile?.imdbLink || '',
+      cv: profile?.cv || '',
+      isLive: profile?.isLive ?? true,
       country: profile?.address?.country || '',
       cityState: profile?.address?.cityState || '',
       roadArea: profile?.address?.roadArea || '',
@@ -76,6 +82,10 @@ export default function SettingsPage() {
         phoneNumber: values.phoneNumber,
         gender: values.gender,
         bio: values.bio,
+        jobRole: values.jobRole,
+        imdbLink: values.imdbLink,
+        cv: values.cv,
+        isLive: values.isLive,
         address: {
           country: values.country,
           cityState: values.cityState,
@@ -98,6 +108,17 @@ export default function SettingsPage() {
     mutationFn: (file: File) => uploadAvatar(token as string, file),
     onSuccess: () => {
       toast.success('Profile photo updated successfully')
+      queryClient.invalidateQueries({ queryKey: ['userProfile'] })
+    },
+    onError: (error: unknown) => {
+      toast.error(getErrorMessage(error))
+    },
+  })
+
+  const uploadCVMutation = useMutation({
+    mutationFn: (file: File) => uploadCV(token as string, file),
+    onSuccess: () => {
+      toast.success('CV uploaded successfully')
       queryClient.invalidateQueries({ queryKey: ['userProfile'] })
     },
     onError: (error: unknown) => {
@@ -147,6 +168,21 @@ export default function SettingsPage() {
     event.target.value = ''
   }
 
+  const handleCVClick = () => {
+    cvInputRef.current?.click()
+  }
+
+  const handleCVChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+
+    if (!file) {
+      return
+    }
+
+    uploadCVMutation.mutate(file)
+    event.target.value = ''
+  }
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -172,10 +208,14 @@ export default function SettingsPage() {
           isPasswordDialogOpen={isPasswordDialogOpen}
           isChangingPassword={changePasswordMutation.isPending}
           fileInputRef={fileInputRef}
+          cvInputRef={cvInputRef}
+          isUploadingCV={uploadCVMutation.isPending}
           onEditToggle={handleEditToggle}
           onSubmit={values => updateProfileMutation.mutate(values)}
           onAvatarClick={handleAvatarClick}
           onAvatarChange={handleAvatarChange}
+          onCVClick={handleCVClick}
+          onCVChange={handleCVChange}
           onPasswordDialogOpenChange={setIsPasswordDialogOpen}
           onPasswordSubmit={values => changePasswordMutation.mutate(values)}
           passwordForm={passwordForm}

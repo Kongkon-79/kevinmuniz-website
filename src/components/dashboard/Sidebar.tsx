@@ -17,6 +17,7 @@ import {
   Search,
   LogOut,
   House,
+  Users,
 } from 'lucide-react'
 import LogoutModal from '@/components/modals/LogoutModal'
 import { cn } from '@/lib/utils'
@@ -57,6 +58,7 @@ export default function DashboardSidebar() {
   const backerLinks = useMemo(
     () => [
       { name: 'Discover', href: '/dashboard/discover', icon: Search },
+      { name: 'Community', href: '/dashboard/community', icon: Users },
       {
         name: 'Tracked Campaigns',
         href: '/dashboard/my-tracked-campaigns',
@@ -71,14 +73,14 @@ export default function DashboardSidebar() {
   const links =
     role === 'CREATOR'
       ? [
-          ...commonLinks,
-          ...creatorLinks,
-          { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-        ]
+        ...commonLinks,
+        ...creatorLinks,
+        { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+      ]
       : [
-          ...backerLinks,
-          { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-        ]
+        ...backerLinks,
+        { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+      ]
 
   const isLinkActive = (href: string) => {
     if (href === '/dashboard/my-campaigns/create') {
@@ -95,6 +97,10 @@ export default function DashboardSidebar() {
 
     if (href === '/dashboard/discover') {
       return pathname === href || pathname.startsWith('/dashboard/discover/')
+    }
+
+    if (href === '/dashboard/community') {
+      return pathname === href || pathname.startsWith('/dashboard/community/')
     }
 
     if (href === '/dashboard/my-donations') {
