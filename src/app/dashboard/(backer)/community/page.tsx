@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Download, ExternalLink, LoaderCircle, Search, MapPin } from "lucide-react";
+import { Download, ExternalLink, LoaderCircle, Search, MapPin, Mail } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -84,7 +84,7 @@ export default function CommunityPage() {
                                 <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-[#0052FF] to-[#33BAFF] opacity-0 transition-opacity group-hover:opacity-100" />
 
                                 <CardContent className="flex flex-1 flex-col items-center p-8">
-                                    <div className="relative mb-6 h-[100px] w-[100px] shrink-0">
+                                    <div className="mx-auto mb-6 relative h-[100px] w-[100px] shrink-0">
                                         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#0052FF] to-[#33BAFF] opacity-10 blur-md group-hover:opacity-20 transition-opacity" />
                                         <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-white shadow-sm">
                                             <Image
@@ -93,6 +93,9 @@ export default function CommunityPage() {
                                                 fill
                                                 className="object-cover"
                                             />
+                                        </div>
+                                        <div className="absolute -bottom-1 -right-1 flex h-6 w-16 items-center justify-center rounded-full bg-[#10B981] border-2 border-white text-[10px] font-bold text-white shadow-sm">
+                                            ACTIVE
                                         </div>
                                     </div>
 
@@ -110,13 +113,22 @@ export default function CommunityPage() {
                                                 Backer
                                             </Badge>
                                         )}
-                                        {user.country && (
+                                        {(user.address?.cityState || user.address?.country) && (
                                             <div className="flex items-center gap-1 text-xs text-[#909090]">
                                                 <MapPin className="h-3 w-3" />
-                                                <span>{user.country}</span>
+                                                <span>
+                                                    {user.address.cityState}{user.address.cityState && user.address.country && ", "}{user.address.country}
+                                                </span>
                                             </div>
                                         )}
                                     </div>
+
+                                    {user.email && (
+                                        <div className="mt-3 flex items-center gap-1.5 text-xs text-[#0052FF] group-hover:underline">
+                                            <Mail className="h-3 w-3" />
+                                            <a href={`mailto:${user.email}`}>{user.email}</a>
+                                        </div>
+                                    )}
 
                                     {user.bio && (
                                         <p className="mt-5 text-sm text-[#5C5C5C] leading-relaxed line-clamp-3 w-full text-center italic">

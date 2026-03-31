@@ -11,7 +11,11 @@ export interface CommunityUser {
     _id: string;
     firstName: string;
     lastName: string;
-    country: string;
+    email: string;
+    address: {
+        country: string;
+        cityState: string;
+    };
     jobRole: string;
     imdbLink: string;
     cv: string;

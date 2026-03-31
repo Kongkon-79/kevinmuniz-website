@@ -310,12 +310,27 @@ export default function ProfileDetailsForm({
                     Job Role
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      readOnly={!isEditing}
-                      className={fieldClassName}
-                      placeholder="e.g. Writer, Producer, Director"
-                    />
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        list="job-roles-list"
+                        readOnly={!isEditing}
+                        className={fieldClassName}
+                        placeholder="e.g. Writer, Producer, Director"
+                      />
+                      <datalist id="job-roles-list">
+                        <option value="Writer" />
+                        <option value="Producer" />
+                        <option value="Director" />
+                        <option value="Actor" />
+                        <option value="Cinematographer" />
+                        <option value="Editor" />
+                        <option value="Sound Designer" />
+                        <option value="Production Designer" />
+                        <option value="Script Supervisor" />
+                        <option value="Casting Director" />
+                      </datalist>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
