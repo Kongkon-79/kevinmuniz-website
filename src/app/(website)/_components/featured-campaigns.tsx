@@ -101,7 +101,7 @@ export default function FeaturedCampaignsSection() {
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-base leading-7 text-slate-500 md:text-lg">
             Discover original movie projects currently seeking cast,
-            producers, and investment partners.
+            producers, and support partners.
           </p>
         </div>
 

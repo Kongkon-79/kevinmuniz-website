@@ -21,7 +21,7 @@ export default function CampaignCard({ campaign }: CampaignCardProps) {
 
   return (
     <div className="overflow-hidden rounded-[14px] bg-white p-3 shadow-[0_4px_14px_rgba(17,24,39,0.04)]">
-      <div className="relative h-[180px] overflow-hidden rounded-[12px]">
+      <div className="relative h-[250px] overflow-hidden rounded-[12px]">
         <Image
           src={campaign.image || "/assets/images/autoLogo.png"}
           alt={campaign.title}

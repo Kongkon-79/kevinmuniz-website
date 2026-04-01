@@ -131,13 +131,13 @@ export default function CreatorCampaignDetailPage() {
       <div className="grid gap-8 lg:grid-cols-12">
         <div className="space-y-8 lg:col-span-8">
           <section className="space-y-6">
-            <div className="flex min-h-[350px] max-h-[500px] w-full items-center justify-center overflow-hidden rounded-[24px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e]">
+            <div className="relative min-h-[430px] w-full overflow-hidden rounded-[24px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] px-4 py-6 md:min-h-[560px]">
               <Image
                 src={campaign.image || '/assets/images/autoLogo.png'}
                 alt={campaign.title}
-                width={800}
-                height={600}
-                className="max-h-[480px] w-auto max-w-full object-contain rounded-[12px]"
+                fill
+                sizes="(max-width: 1024px) 100vw, 66vw"
+                className="p-4 object-contain"
                 priority
               />
             </div>

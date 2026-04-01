@@ -44,7 +44,7 @@ export default function CampaignCard({ campaign }: CampaignCardProps) {
 
   return (
     <Card className="group h-full overflow-hidden rounded-[26px] border border-[#DDEEFE] bg-white/90 shadow-[0_18px_50px_rgba(46,171,252,0.12)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_60px_rgba(140,92,255,0.18)]">
-      <div className="relative h-[220px] w-full overflow-hidden rounded-t-[26px]">
+      <div className="relative h-[300px] w-full overflow-hidden rounded-t-[26px]">
         <Image
           src={campaign.image}
           alt={campaign.title}

@@ -17,6 +17,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import type { ProfileFormValues } from "../schema";
 import type { UserProfile } from "../types";
@@ -76,6 +83,8 @@ export default function ProfileDetailsForm({
   onPasswordSubmit,
   passwordForm,
 }: ProfileDetailsFormProps) {
+  const isBacker = profile?.role === "USER";
+
   return (
     <div className="rounded-[2px] bg-white p-6 md:p-10 shadow-sm">
       <div className="flex flex-col gap-6 border-b border-[#F0F0F0] pb-8 lg:flex-row lg:items-center lg:justify-between">
@@ -404,46 +413,108 @@ export default function ProfileDetailsForm({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="isLive"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border border-[#F0F0F0] p-4 shadow-sm mt-8 h-[52px]">
-                  <div className="flex items-center gap-2">
-                    <FormLabel className="text-[16px] font-medium text-[#1E1E1E]">
-                      Community Visibility
-                    </FormLabel>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <button type="button" className="text-gray-400 hover:text-gray-600">
-                          <Info className="h-4 w-4" />
-                          <span className="sr-only">How it works?</span>
-                        </button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-md bg-white">
-                        <DialogHeader>
-                          <DialogTitle>Community Visibility</DialogTitle>
-                          <DialogDescription className="pt-2 text-[15px] leading-relaxed text-[#5C5C5C]">
-                            When this is <strong>enabled</strong>, your professional profile (Name, Job Role, IMDb link, and CV) will be visible to other members on the <strong>Community page</strong>.
-                            <br /><br />
-                            This helps industry professionals, producers, and fellow writers discover your work and connect with you for potential collaborations.
-                            <br /><br />
-                            If <strong>disabled</strong>, your profile will remain private and won&apos;t appear in the community listings.
-                          </DialogDescription>
-                        </DialogHeader>
-                      </DialogContent>
-                    </Dialog>
-                  </div>
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      disabled={!isEditing}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            {isBacker ? (
+              <FormField
+                control={form.control}
+                name="communityStatus"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="mb-2 flex items-center gap-2">
+                      <FormLabel className="text-[16px] font-medium text-[#999999]">
+                        Community Status
+                      </FormLabel>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <button type="button" className="text-gray-400 hover:text-gray-600">
+                            <Info className="h-4 w-4" />
+                            <span className="sr-only">How it works?</span>
+                          </button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md bg-white">
+                          <DialogHeader>
+                            <DialogTitle>Community Status</DialogTitle>
+                            <DialogDescription className="pt-2 text-[15px] leading-relaxed text-[#5C5C5C]">
+                              Set your community profile to <strong>active</strong> to appear on the <strong>Community page</strong>.
+                              <br /><br />
+                              Set it to <strong>inactive</strong> if you want to hide your profile from community listings.
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                    <FormControl>
+                      <Select
+                        value={field.value || "active"}
+                        onValueChange={field.onChange}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger
+                          className={`${fieldClassName} cursor-pointer transition-colors hover:bg-[#EAF6FF] disabled:cursor-not-allowed disabled:hover:bg-[#F4F4F4]`}
+                        >
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white">
+                          <SelectItem
+                            value="active"
+                            className="cursor-pointer transition-colors hover:bg-[#EAF6FF] focus:bg-[#EAF6FF]"
+                          >
+                            active
+                          </SelectItem>
+                          <SelectItem
+                            value="inactive"
+                            className="cursor-pointer transition-colors hover:bg-[#EAF6FF] focus:bg-[#EAF6FF]"
+                          >
+                            inactive
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              <FormField
+                control={form.control}
+                name="isLive"
+                render={({ field }) => (
+                  <FormItem className="mt-8 flex h-[52px] flex-row items-center justify-between rounded-lg border border-[#F0F0F0] p-4 shadow-sm">
+                    <div className="flex items-center gap-2">
+                      <FormLabel className="text-[16px] font-medium text-[#1E1E1E]">
+                        Community Visibility
+                      </FormLabel>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <button type="button" className="text-gray-400 hover:text-gray-600">
+                            <Info className="h-4 w-4" />
+                            <span className="sr-only">How it works?</span>
+                          </button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md bg-white">
+                          <DialogHeader>
+                            <DialogTitle>Community Visibility</DialogTitle>
+                            <DialogDescription className="pt-2 text-[15px] leading-relaxed text-[#5C5C5C]">
+                              When this is <strong>enabled</strong>, your professional profile (Name, Job Role, IMDb link, and CV) will be visible to other members on the <strong>Community page</strong>.
+                              <br /><br />
+                              This helps industry professionals, producers, and fellow writers discover your work and connect with you for potential collaborations.
+                              <br /><br />
+                              If <strong>disabled</strong>, your profile will remain private and won&apos;t appear in the community listings.
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        disabled={!isEditing}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            )}
           </div>
 
           {isEditing && (

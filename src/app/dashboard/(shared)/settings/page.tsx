@@ -37,7 +37,7 @@ export default function SettingsPage() {
     enabled: !!token,
   })
 
-  const defaultValues = useMemo(
+  const defaultValues = useMemo<ProfileFormValues>(
     () => ({
       userName: getUserName(profile),
       phoneNumber: profile?.phoneNumber || '',
@@ -47,6 +47,7 @@ export default function SettingsPage() {
       imdbLink: profile?.imdbLink || '',
       cv: profile?.cv || '',
       isLive: profile?.isLive ?? true,
+      communityStatus: profile?.isLive === false ? 'inactive' : 'active',
       country: profile?.address?.country || '',
       cityState: profile?.address?.cityState || '',
       roadArea: profile?.address?.roadArea || '',
@@ -85,7 +86,10 @@ export default function SettingsPage() {
         jobRole: values.jobRole,
         imdbLink: values.imdbLink,
         cv: values.cv,
-        isLive: values.isLive,
+        isLive:
+          profile?.role === 'USER'
+            ? values.communityStatus !== 'inactive'
+            : values.isLive,
         address: {
           country: values.country,
           cityState: values.cityState,

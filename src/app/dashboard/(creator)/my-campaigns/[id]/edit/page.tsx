@@ -451,14 +451,14 @@ export default function EditCampaignPage() {
                           }
                         }}
                         className={cn(
-                          'flex min-h-[300px] cursor-pointer items-center justify-center rounded-[12px] border border-dashed bg-[#FBFBFB] p-4',
+                          'flex min-h-[380px] cursor-pointer items-center justify-center rounded-[12px] border border-dashed bg-[#FBFBFB] p-4 md:min-h-[480px]',
                           fieldState.error
                             ? 'border-[#EF4444]'
                             : 'border-[#D5DAE1]',
                         )}
                       >
                         {imagePreview ? (
-                          <div className="relative h-[400px] w-full overflow-hidden rounded-[12px] bg-[#F5F5F5]">
+                          <div className="relative h-[460px] w-full overflow-hidden rounded-[12px] bg-[#F5F5F5] md:h-[560px]">
                             <Image
                               src={imagePreview}
                               alt="Campaign preview"

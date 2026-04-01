@@ -9,6 +9,7 @@ export const profileFormSchema = z.object({
   imdbLink: z.string().optional(),
   cv: z.string().optional(),
   isLive: z.boolean().optional(),
+  communityStatus: z.enum(["active", "inactive"]).optional(),
   country: z.string().optional(),
   cityState: z.string().optional(),
   roadArea: z.string().optional(),

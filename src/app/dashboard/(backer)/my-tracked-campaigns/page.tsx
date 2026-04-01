@@ -90,7 +90,7 @@ export default function MyTrackedCampaignsPage() {
               key={index}
               className="overflow-hidden rounded-[18px] border border-[#D7E8FF] bg-white p-4 shadow-[0_4px_14px_rgba(17,24,39,0.04)]"
             >
-              <Skeleton className="h-[180px] w-full rounded-[14px]" />
+              <Skeleton className="h-[250px] w-full rounded-[14px]" />
               <Skeleton className="mt-4 h-6 w-2/3" />
               <Skeleton className="mt-3 h-16 w-full" />
             </div>
@@ -108,7 +108,7 @@ export default function MyTrackedCampaignsPage() {
                 className="overflow-hidden rounded-[18px] border border-[#D7E8FF] bg-white p-4 shadow-[0_4px_14px_rgba(17,24,39,0.04)]"
               >
                 <div className="grid gap-4 lg:grid-cols-[260px_minmax(0,1fr)]">
-                  <div className="relative h-[190px] overflow-hidden rounded-[16px]">
+                  <div className="relative h-[260px] overflow-hidden rounded-[16px]">
                     <Image
                       src={campaign.image || '/assets/images/autoLogo.png'}
                       alt={campaign.title}
