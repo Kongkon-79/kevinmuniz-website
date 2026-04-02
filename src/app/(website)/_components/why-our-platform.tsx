@@ -12,7 +12,7 @@ const features = [
     icon: Handshake,
     title: "Verified Industry Backers",
     description:
-      "Producers, cast members, and investors can apply directly to campaigns, making collaboration structured, transparent, and efficient.",
+      "Producers, cast members, and contributors can apply directly to campaigns, making collaboration structured, transparent, and efficient.",
   },
   {
     icon: Lock,
