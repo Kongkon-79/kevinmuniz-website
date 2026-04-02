@@ -16,7 +16,8 @@ export default function StepsForFilmIndustryProfessionals() {
     },
     {
       id: "03",
-      title: "Donate to Your Preferred IP",
+      title:
+        "Discover and support stories you believe have strong potential for success.",
       description:
         "Contribute to the stories you believe have the potential to succeed.",
     },
