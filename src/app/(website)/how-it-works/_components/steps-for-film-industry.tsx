@@ -4,9 +4,9 @@ export default function StepsForFilmIndustryProfessionals() {
   const steps = [
     {
       id: "01",
-      title: "Create an Account",
+      title: "Register as a backer.",
       description:
-        "Kindly share your background and your professional role in the industry.",
+        "Create your backer account so you can explore projects and start supporting the stories that interest you.",
     },
     {
       id: "02",

@@ -4,9 +4,9 @@ export default function StepsForAuthors() {
   const steps = [
     {
       id: "01",
-      title: "Create An Account",
+      title: "Create an account to start a campaign.",
       description:
-        "If you are the author of a published book or any other form of intellectual property, you're in the right place. To get started, simply create a new book entry by providing the title of your story along with a brief description.",
+        "Sign up to begin your campaign and share the title and a short description of your story to get started.",
     },
     {
       id: "02",
