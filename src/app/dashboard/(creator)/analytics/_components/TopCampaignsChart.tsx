@@ -17,7 +17,8 @@ interface TopCampaignsChartProps {
   isLoading: boolean
 }
 
-const truncateTitle = (title: string) => {
+const truncateTitle = (title?: string) => {
+  if (!title) return ''
   if (title.length <= 15) {
     return title
   }
@@ -41,10 +42,10 @@ export default function TopCampaignsChart({
   const chartData =
     campaigns.length > 0
       ? campaigns.map(campaign => ({
-          title: truncateTitle(campaign.title),
-          totalRaised: campaign.totalRaised,
-          fullTitle: campaign.title,
-        }))
+        title: truncateTitle(campaign.title),
+        totalRaised: campaign.totalRaised,
+        fullTitle: campaign.title,
+      }))
       : [{ title: 'No Campaigns', totalRaised: 0, fullTitle: 'No Campaigns' }]
 
   return (

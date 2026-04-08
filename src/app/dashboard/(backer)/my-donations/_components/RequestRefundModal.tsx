@@ -30,7 +30,8 @@ interface RequestRefundModalProps {
   onSubmit: (donationId: string, reason: string) => Promise<void>
 }
 
-const truncateTransactionId = (value: string) => {
+const truncateTransactionId = (value?: string) => {
+  if (!value) return ''
   if (value.length <= 18) return value
   return `${value.slice(0, 8)}...${value.slice(-6)}`
 }

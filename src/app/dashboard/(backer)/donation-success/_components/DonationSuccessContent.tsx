@@ -37,7 +37,8 @@ const formatDonationAmount = (amount: number) => {
   return `$${amount}`
 }
 
-const truncateValue = (value: string, maxLength: number) => {
+const truncateValue = (value: string | undefined, maxLength: number) => {
+  if (!value) return ''
   if (value.length <= maxLength) {
     return value
   }

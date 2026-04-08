@@ -25,7 +25,8 @@ const formatDateTime = (value: string) =>
     hour12: false,
   })
 
-const truncateSessionId = (value: string) => {
+const truncateSessionId = (value?: string) => {
+  if (!value) return ''
   if (value.length <= 22) return value
   return `${value.slice(0, 10)}...${value.slice(-8)}`
 }
